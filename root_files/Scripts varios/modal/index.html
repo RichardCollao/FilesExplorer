@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Modal</title>
+        <link type="text/css" rel="stylesheet" href="modal.css" media="screen" />
+        <script type="text/javascript" src="modal.js"></script>
+    </head>
+    <body>
+        <div id="modal-one" class="modal-container" data-modal-container>
+            <div class="modal-content">
+                <span class="modal-close" data-modal-close>&times;</span>
+                <div class="modal-header">
+                    <h2 class="modal-title">Mi modal</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+                </div>
+                <div class="modal-footer" style="text-align: right">
+                    <button style="width: 100px" type="button">Ok</button>
+                    <button style="width: 100px" type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <button onclick="showModal('modal-one');">Abrir</button>
+    </body>
+</html>

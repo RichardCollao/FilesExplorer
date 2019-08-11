@@ -1,0 +1,137 @@
+#FilesExplorerContent{
+    /*border:1px solid whitesmoke;*/
+    border:1px solid red;
+    width:100%;
+}
+
+#files_bar_buttons .icon-btn{
+    text-align: right;
+    border: 1px solid silver;
+    width: 35px;
+    height: 30px;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#files_bar_buttons .icon-btn:hover {
+    color: #000!important;
+    background-color: whitesmoke !important;
+    cursor: pointer;
+}
+
+#files_display_content .icon-btn-row{
+    width: 30px;
+    height: 24px;
+    padding: 3px;
+    border: 1px solid silver;
+    border-radius: 4px;
+    background-color: whitesmoke;
+}
+#files_display_content .icon-btn-row:hover {
+    color: #000!important;
+    background-color: #ccc!important;
+    cursor: pointer;
+}
+#files_display_content .icon-file-type{
+    width: 30px;
+    height: 24px;
+    cursor: pointer;
+}
+
+#files_breadcrumb li{
+    cursor: pointer;
+}
+
+/* Tabla contenedora de archivos */
+#files_display table{
+    border:1px solid silver;
+}
+
+#files_display table td{
+    padding:5px 10px;
+    vertical-align: bottom;
+    overflow: hidden;/*Oculta el desborde*/
+    text-overflow: ellipsis;/*determina como el contenido que se desborda es mostrado*/
+    white-space: nowrap;/*Evita que las tablas se expandan fuera de la pantalla*/
+}
+
+#files_display table tr td:nth-child(1) , td:nth-child(3) , td:nth-child(4) {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+#files_display table tr td:nth-child(5) {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+}
+
+
+
+/* Evita que las tablas se expandan fuera de la pantalla */
+.force-one-row{
+    overflow:hidden;
+    white-space: nowrap;
+}
+/* Oculta el desborde */
+.truncate{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Fuerza todas las palabras que son muy largas al encontrarse con el límite del ancho 
+de su contenedor se corten y sigan en la línea de abajo */
+.breakAll {word-break: break-all;}
+
+/* Estilo del boton close del modal */
+.modal-close {
+    cursor: pointer;
+    top: 10px;
+    right: 10px;
+    position:absolute;
+}
+.modal-close:hover {
+    transform: scale(1.2);
+}
+
+/*Bloquea la seleccion de texto*/
+.disableselect{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Loading... */
+/* Circle rotate */
+.circle-loader {
+    border: 5px solid lightblue; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: spin 1s linear infinite;
+    display: block;
+    visibility: visible;
+    position: absolute;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tooltip */
+[tooltip]:before {            
+    position : absolute;
+    content : attr(tooltip);
+    opacity : 0;
+    margin-top:-15px;
+    display: box;
+    background-color: white;
+}
+[tooltip]:hover:before {        
+    opacity : 1;
+}
