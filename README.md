@@ -18,11 +18,17 @@ require_once(dirname(__FILE__) . '/class/FilesExplorerServer.php');
 ```
 Antes de volcar la vista en el navegador es necesario salvar algunos parámetros en el servidor para que este pueda responder adecuadamente a la peticiones asíncronas que se realizaran desde el navegador.
 
+
 Define el directorio base el cual no necesariamente tiene que ser parte del dominio publico, sin embargo si este se establece en un directorio privado se recomienda desactivar el botón clipboard ya que los enlaces generados no apuntaran al archivo por encontrarse fuera del alcance publico.
 
 ```php
 FilesExplorerServer::setBaseDirFiles(dirname(__FILE__) . '/root_files/');
 ```
+Obtiene el token con el cual se asegura la sesion
+```php
+$token = FilesExplorerServer::generateToken();
+```
+
 
 Este método establece las acciones que serán aceptadas en el servidor, por ejemplo si este modulo es implementado en un sistema que maneja cuentas de usuarios, se podrían restringir las acciones en función del perfil de cada usuario.
 
@@ -33,6 +39,7 @@ FilesExplorerServer::setAllowedActions(['upload', 'addfolder', 'rename', 'move',
 El siguiente paso es incluir los archivos necesarios para que el modulo funcione correctamente.
 
 La vista esta utiliza las clases del framework w3.css, pero no se limita solamente a esta librería, ya que es bastante fácil crear un nuevo layout con reglas de estilos personalizadas o basadas en otros framewrok CSS.
+
 Incluye la hoja de estilos para la vista 
 ```html
 <link type="text/css" rel="stylesheet" href="./public/css/w3.css"/>
