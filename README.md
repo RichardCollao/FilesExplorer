@@ -63,18 +63,33 @@ Establece la caja que servira de contenedor, es importante asignar el atributo i
 Finalmente se inicializa la clase cuando el documento se ha cargado totalmente.
 ```javascript
 <script type="text/javascript">
-            window.onload = function () {
-                let filesExplorerClient = new FilesExplorerClient('files_container_display');
-                // Envia el token creado en el servidor 
-                filesExplorerClient.setToken('<?php echo $token; ?>');
-                // Establece la url que apunta al controlador
-                filesExplorerClient.setServerController('./class/FilesExplorerServer.php');
-                // Establece la url que apunta a la base url que contiene los archivos
-                // filesExplorerClient.setBaseUrlFiles('');
-                // Permite posicionar el explorador sobre un nivel relativo a la ruta establecida como base
-                filesExplorerClient.setPathRelative('');
-                // Inicializa la clase
-                filesExplorerClient.start();
-            };
+    window.onload = function () {
+        let filesExplorerClient = new FilesExplorerClient('files_container_display');
+        // Envia el token creado en el servidor 
+        filesExplorerClient.setToken('<?php echo $token; ?>');
+        // Establece la url que apunta al controlador
+        filesExplorerClient.setServerController('./class/FilesExplorerServer.php');
+        // Establece la url que apunta a la base url que contiene los archivos
+        // filesExplorerClient.setBaseUrlFiles('');
+        // Permite posicionar el explorador sobre un nivel relativo a la ruta establecida como base
+        filesExplorerClient.setPathRelative('');
+        // Inicializa la clase
+        filesExplorerClient.start();
+    };
 </script>
 ```
+
+## Licencia
+
+ <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                <img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+            </a>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional License</a>.
+
+## Versionado
+El proyecto utiliza SemVer para el versionado. Para todas las versiones disponibles, mira los tags en este repositorio.
+
+## Dependencias
+[W3.CSS Framework](https://www.w3schools.com/w3css/ "W3.CSS Framework")
+
+[Font Awesome](https://fontawesome.com/icons?d=gallery&m=free "Font Awesome Search Icons:  Search icons...  Search! Search! Start Icons Docs Support Plans Blog")
