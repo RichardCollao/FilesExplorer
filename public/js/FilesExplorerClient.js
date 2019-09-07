@@ -6,11 +6,13 @@ class FilesExplorerClient {
         // Formulario utilizado en alguna operaciones como cortar y 
         this.tempFormData = new FormData();
         this.idElement = idElement;
+        this.element = document.querySelector('#' + this.idElement);
+//        this.element.classList.add('files_display_content');
 
         // Obtiene la url real del script FilesExplorerClient.js
         var url = document.querySelector('script[src$="FilesExplorerClient.js"]').src;
         var name = url.split('/').pop();
-        var dir = url.replace(name, "");
+        var dir = url.replace(name, '');
         var parser = new URL(dir + '../../');
 
         // Establece la ruta base correspondiente al modulo
@@ -24,40 +26,41 @@ class FilesExplorerClient {
     start() {
         // Carga el layout y asigna los correspondientes eventos a los botones
         this.loadHtml(this.layout, function (str) {
-
-            document.querySelector('#' + this.idElement).innerHTML = str;
+            this.element.innerHTML = str;
 
             // Asigna el evento click a todos los botones closet de los elementos .modal-container
-            Array.from(document.querySelectorAll('[data-modal-close]')).forEach(link => {
+            Array.from(this.element.querySelectorAll('[data-modal-close]')).forEach(link => {
                 link.addEventListener('click', function (event) {
-                    this.closest("[data-modal-container]").style.display = 'none';
+                    this.closest('[data-modal-container]').style.display = 'none';
                 });
             });
 
-            document.querySelector('#btnUpLevelDirectory').onclick = this.upLevelDirectory.bind(this);
+            this.element.querySelector('[data-id="btnUpLevelDirectory"]').onclick = this.upLevelDirectory.bind(this);
 
-            document.querySelector('#btnUploadFile').onclick = function () {
+            this.element.querySelector('[data-id="btnUploadFile"]').onclick = function () {
                 this.setModalContent('template_form_upload');
                 this.showModal();
-                document.querySelector('#form_upload_files').onsubmit = this.uploadFiles.bind(this);
+                this.element.querySelector('[data-id="form_upload_files"]').onsubmit = this.uploadFiles.bind(this);
 
-                document.querySelector('#form_upload_files input[name="files[]"]').onchange =
-                        function () {
-                            var input = this;
-                            var numFiles = input.files.length ? input.files.length : 1;
-                            var nameFile = input.value.replace(/\\/g, '/').replace(/.*\//, '');
-                            var textLabel = numFiles > 1 ? numFiles + ' files selected' : nameFile;
-                            document.querySelector('#form_upload_files input[type="text"]').value = textLabel;
-                        };
+                this.element.querySelector('[data-id="form_upload_files"] input[name="files[]"]').onchange = function (event) {
+                    var input = event.target;
+
+                    var numFiles = input.files.length ? input.files.length : 1;
+                    var nameFile = input.value.replace(/\\/g, '/').replace(/.*\//, '');
+                    var textLabel = numFiles > 1 ? numFiles + ' files selected' : nameFile;
+                    this.element.querySelector('[data-id="form_upload_files"] input[type="text"]').value = textLabel;
+                }.bind(this);
             }.bind(this);
 
-            document.querySelector('#btnAddFolder').onclick = function () {
+            this.element.querySelector('[data-id="btnAddFolder"]').onclick = function () {
                 this.setModalContent('template_form_add_folder');
                 this.showModal();
-                document.querySelector('#form_add_folder').onsubmit = this.addFolder.bind(this);
+                this.element.querySelector('[data-id="form_add_folder"]').onsubmit = this.addFolder.bind(this);
             }.bind(this);
 
-            document.querySelector('#btnPaste').className = document.querySelector('#btnPaste').dataset.classDisabled;
+//            this.element.querySelector('[data-id="btnPaste"]').className = this.element.querySelector('[data-id="btnPaste"]').dataset.classDisabled;
+            let btnPaste = this.element.querySelector('[data-id="btnPaste"]');
+            btnPaste.classList.add(btnPaste.dataset.classDisabled);
 
             // Actualiza por primera vez para mostrar listar los archivos.
             this.refresh();
@@ -105,7 +108,6 @@ class FilesExplorerClient {
     }
 
     // Recibe token correspondiente al identificador en la sesssion 
-    // que contiene los parametros del controlador del lado del servidor
     setToken(token) {
         this.token = token;
     }
@@ -148,14 +150,13 @@ class FilesExplorerClient {
                 // Llama a la funcion callback y pasa el resultado como argumento
                 response.text().then(
                         function (response) {
-                            console.log('');
 //                            console.log(response);
                             try {
                                 // Parsea los datos recibidos en un objeto json y llama la funcion callback
                                 var json = JSON.parse(response);
                                 callback(json);
                             } catch (e) {
-                                console.log("error: " + e);
+                                console.log('error: ' + e);
                             }
                             this.hideLoading();
                         }.bind(this));
@@ -170,11 +171,11 @@ class FilesExplorerClient {
     }
 
     showLoading() {
-        document.querySelector(".circle-loader").setAttribute("style", "visibility: visible");
+        this.element.querySelector('.circle-loader').setAttribute('style', 'visibility: visible');
     }
 
     hideLoading() {
-        document.querySelector(".circle-loader").setAttribute("style", "visibility: hidden");
+        this.element.querySelector('.circle-loader').setAttribute('style', 'visibility: hidden');
     }
 
     isEmptyArray(array) {
@@ -198,8 +199,18 @@ class FilesExplorerClient {
                     this.refreshDisplayList(json);
                     // Actualiza la barra de navegacion
                     this.refreshBreadcurmb();
+                    // Convierte rutas relativas en absolutas
+                    this.convertUrlRelativesToAbsolute();
                 }.bind(this)
                 , formData);
+    }
+
+    // reemplaza la url relativa por abosuluta
+    convertUrlRelativesToAbsolute() {
+        Array.from(this.element.querySelectorAll('img')).forEach(img => {
+            let src = img.getAttribute('src');
+            img.src = src.replace(/\.\//gi, this.scriptPath);
+        });
     }
 
     uploadFiles(e) {
@@ -207,7 +218,7 @@ class FilesExplorerClient {
 
         // obtiene los datos desde el formulario
         var path_relative = this.getPathRelative();
-        var formData = new FormData(document.getElementById('form_upload_files'));
+        var formData = new FormData(this.element.querySelector('[data-id="form_upload_files"]'));
         formData.append('action', 'upload');
         formData.append('path_relative', path_relative);
 
@@ -241,7 +252,7 @@ class FilesExplorerClient {
         // Oculta el modal
         this.hideModal();
         var path_relative = this.getPathRelative();
-        var formData = new FormData(document.getElementById('form_add_folder'));
+        var formData = new FormData(this.element.querySelector('[data-id="form_add_folder"]'));
         formData.append('action', 'addfolder');
         formData.append('path_relative', path_relative);
 
@@ -285,7 +296,7 @@ class FilesExplorerClient {
         var a = document.createElement('a');
 
         // Corrige enlace con espacios en blanco
-        a.href = downloadUrl.replace(" ", "%20");
+        a.href = downloadUrl.replace(' ', '%20');
 
         // Nombre para la descarga
         a.download = file;
@@ -314,9 +325,9 @@ class FilesExplorerClient {
 
         fetch(request).then(function (t) {
             return t.blob().then((b) => {
-                var a = document.createElement("a");
+                var a = document.createElement('a');
                 a.href = URL.createObjectURL(b);
-                a.setAttribute("download", file);
+                a.setAttribute('download', file);
                 a.click();
             });
         });
@@ -330,15 +341,20 @@ class FilesExplorerClient {
         this.tempFormData.append('path_relative', path_relative);
         this.tempFormData.append('origin', path_relative + file);
 
-        document.querySelector('#btnPaste').onclick = this.doMoveFiles.bind(this, file);
-        document.querySelector('#btnPaste').className = document.querySelector('#btnPaste').dataset.classEnabled;
+        let btnPaste = this.element.querySelector('[data-id="btnPaste"]');
+
+        btnPaste.onclick = this.doMoveFiles.bind(this, file);
+        btnPaste.classList.remove(btnPaste.dataset.classDisabled);
+        btnPaste.classList.add(btnPaste.dataset.classEnabled);
     }
 
     doMoveFiles(file) {
         this.tempFormData.append('destination', this.getPathRelative() + file);
 
-        document.querySelector('#btnPaste').onclick = null;
-        document.querySelector('#btnPaste').className = document.querySelector('#btnPaste').dataset.classDisabled;
+        let btnPaste = this.element.querySelector('[data-id="btnPaste"]');
+        btnPaste.onclick = null;
+        btnPaste.classList.add(btnPaste.dataset.classDisabled);
+        btnPaste.classList.remove(btnPaste.dataset.classEnabled);
 
         // Envia la peticion al servidor
         this.loadController(
@@ -369,16 +385,16 @@ class FilesExplorerClient {
         var result = document.execCommand('copy');
         document.body.removeChild(input);
 
-        prompt("Link copied to the clipboard.", uri);
+        prompt('Link copied to the clipboard.', uri);
         return result;
     }
 
     showFormRenameFile(file) {
         this.setModalContent('template_form_rename_file');
         this.showModal();
-        var newname = document.querySelector('#form_rename_file [name="newname"]');
+        var newname = this.element.querySelector('[data-id="form_rename_file"] [name="newname"]');
         newname.value = file;
-        document.querySelector('#form_rename_file [name="send"]').onclick = this.validateRenameFile.bind(this, file);
+        this.element.querySelector('[data-id="form_rename_file"] [name="send"]').onclick = this.validateRenameFile.bind(this, file);
     }
 
     validateRenameFile(file) {
@@ -389,7 +405,7 @@ class FilesExplorerClient {
         // Oculta el modal
         this.hideModal();
         var path_relative = this.getPathRelative();
-        var formData = new FormData(document.getElementById('form_rename_file'));
+        var formData = new FormData(this.element.querySelector('[data-id="form_rename_file"]'));
         formData.append('action', 'rename');
         formData.append('oldname', file);
         formData.append('path_relative', path_relative);
@@ -411,7 +427,7 @@ class FilesExplorerClient {
     }
 
     confirmDeleteFile(file) {
-        if (confirm("Esta seguro que desea borrar el archivo")) {
+        if (confirm('Esta seguro que desea borrar el archivo')) {
             this.deleteFile(file);
         }
     }
@@ -437,18 +453,17 @@ class FilesExplorerClient {
                     }
                 }.bind(this)
                 , formData);
-
     }
 
     refreshDisplayList(data) {
-//        var thead = document.querySelector('');
-        var tbody = document.querySelector('#files_display_content table>tbody');
+//        var thead = this.element.querySelector('');
+        var tbody = this.element.querySelector('[data-id="files_display_content"] table>tbody');
         tbody.innerHTML = '';
 
         if (data.files.length < 1) {
-            document.querySelector('#files_display_content table thead tr:last-child').style.display = "table-row";
+            this.element.querySelector('[data-id="files_display_content"] table thead tr:last-child').style.display = 'table-row';
         } else {
-            document.querySelector('#files_display_content table thead tr:last-child').style.display = "none";
+            this.element.querySelector('[data-id="files_display_content"] table thead tr:last-child').style.display = 'none';
         }
 
         Array.from(data.files).forEach(function (val, index) {
@@ -457,18 +472,19 @@ class FilesExplorerClient {
             var ext = val.basename.substr(pos + 1);
 
             // Copia e inserta el template para que sea renderizado y asi poder asignar eventos
-            var tpl = document.querySelector('#template_row');
+            var tpl = this.element.querySelector('#template_row');
             var copy = document.importNode(tpl.content, true);
+
             tbody.appendChild(copy);
 
             // Obtiene la ultima fila correspondiente a la fila copiada
-            var tr = tbody.querySelector("tr:last-child");
-            var td = tr.querySelectorAll("td");
+            var tr = tbody.querySelector('tr:last-child');
+            var td = tr.querySelectorAll('td');
 
             var img_icon_type = td[0].querySelector('img');
             if (val.mime === 'directory') {
                 // Cambia la imagen
-                img_icon_type.src = "./external_libs/svg/folder.svg";
+                img_icon_type.src = this.scriptPath + 'external_libs/svg/folder.svg';
                 img_icon_type.style.cursor = 'pointer';
 
                 td[0].ondblclick = this.goDirectory.bind(this, val.basename);
@@ -477,7 +493,7 @@ class FilesExplorerClient {
                 tr.style.cursor = 'pointer';
             } else {
                 // Cambia la imagen
-                img_icon_type.src = "./external_libs/svg/" + this.getClassByExts(ext) + ".svg";
+                img_icon_type.src = this.scriptPath + 'external_libs/svg/' + this.getClassByExts(ext) + '.svg';
                 img_icon_type.style.cursor = 'default';
                 tr.style.cursor = 'default';
             }
@@ -486,31 +502,49 @@ class FilesExplorerClient {
             td[2].innerHTML = val.mime === 'directory' ? '...' : this.humanFileSize(val.size);
 
             // Asigna el metodo correspondiente al evento click en los botones
-            var buttons = td[3].querySelectorAll('img');
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].className = buttons[i].dataset.classEnabled;
+            var btnDownload = td[3].querySelector('img[name="download"]');
+            var btnMove = td[3].querySelector('img[name="move"]');
+            var btnShared = td[3].querySelector('img[name="shared"]');
+            var btnEdit = td[3].querySelector('img[name="edit"]');
+            var btnDelete = td[3].querySelector('img[name="delete"]');
+
+            if (data.allowed_actions.indexOf('download') !== -1) {
+                btnDownload.style.display = 'inline-block';
+                if (val.mime === 'directory') {
+                    btnDownload.disabled = true;
+                    btnDownload.title = '';
+                    // Asigna la clase CSS que deshabilita el boton "Download" por tratarse de un directorio
+                    btnDownload.classList.add(btnDownload.dataset.classDisabled);
+
+                } else {
+                    btnDownload.onclick = this.downloadFile.bind(this, val.basename);
+                }
             }
 
-            if (val.mime === 'directory') {
-                buttons[0].disabled = true;
-                buttons[0].title = "";
-                // Asigna la clase CSS que deshabilita el boton "Download" por tratarse de un directorio
-                buttons[0].className = buttons[0].dataset.classDisabled;
-            } else {
-                buttons[0].onclick = this.downloadFile.bind(this, val.basename);
+            if (data.allowed_actions.indexOf('move') !== -1) {
+                btnMove.onclick = this.prepareMoveFiles.bind(this, val.basename);
+                btnMove.style.display = 'inline-block';
             }
-            buttons[1].onclick = this.prepareMoveFiles.bind(this, val.basename);
-            buttons[2].onclick = this.clipboardFile.bind(this, val.basename);
-            buttons[3].onclick = this.showFormRenameFile.bind(this, val.basename);
-            buttons[4].onclick = this.confirmDeleteFile.bind(this, val.basename);
+            if (data.allowed_actions.indexOf('shared') !== -1) {
+                btnShared.onclick = this.clipboardFile.bind(this, val.basename);
+                btnShared.style.display = 'inline-block';
+            }
+            if (data.allowed_actions.indexOf('rename') !== -1) {
+                btnEdit.style.display = 'inline-block';
+                btnEdit.onclick = this.showFormRenameFile.bind(this, val.basename);
+            }
+            if (data.allowed_actions.indexOf('delete') !== -1) {
+                btnDelete.onclick = this.confirmDeleteFile.bind(this, val.basename);
+                btnDelete.style.display = 'inline-block';
+            }
         }.bind(this));
     }
 
     refreshBreadcurmb() {
-        var list_breadcrumb = document.querySelector("#files_breadcrumb_content ul,ol");
+        var list_breadcrumb = this.element.querySelector('[data-id="files_breadcrumb_content"] ul,ol');
 
         // Obtiene un arreglo con los elementos de la lista excluyento el primero que corresponde al home
-        var items = list_breadcrumb.querySelectorAll("li:not(:first-child)");
+        var items = list_breadcrumb.querySelectorAll('li:not(:first-child)');
 
         // Elimina los nodos seleccionados
         for (var k = 0; k < items.length; k++) {
@@ -530,7 +564,7 @@ class FilesExplorerClient {
             li.appendChild(a);
             list_breadcrumb.appendChild(li);
         }
-        document.getElementById('files_breadcrumb_content').appendChild(list_breadcrumb);
+        this.element.querySelector('[data-id="files_breadcrumb_content"]').appendChild(list_breadcrumb);
     }
 
     getClassByExts(ext) {
@@ -576,7 +610,7 @@ class FilesExplorerClient {
 
     setAlert(type, title, content) {
         this.setModalContent('template_alert');
-        var filesModalBody = document.querySelector('#files-modal-content');
+        var filesModalBody = this.element.querySelector('[data-id="files-modal-content"]');
 
         var alertStyle;
         switch (type) {
@@ -598,21 +632,21 @@ class FilesExplorerClient {
     }
 
     setModalContent(id_template) {
-        var filesModal = document.querySelector('#files-modal');
+        var filesModal = this.element.querySelector('[data-id="files-modal"]');
         var template = document.getElementById(id_template);
-        var filesModalBody = document.querySelector('#files-modal-content');
+        var filesModalBody = this.element.querySelector('[data-id="files-modal-content"]');
         filesModalBody.innerHTML = '';
         var nodeClone = document.importNode(template.content, true);
         filesModalBody.appendChild(nodeClone);
     }
 
     showModal() {
-        var filesModal = document.querySelector('#files-modal');
+        var filesModal = this.element.querySelector('[data-id="files-modal"]');
         filesModal.style.display = 'block';
     }
 
     hideModal() {
-        var filesModal = document.querySelector('#files-modal');
+        var filesModal = this.element.querySelector('[data-id="files-modal"]');
         filesModal.style.display = 'none';
     }
 

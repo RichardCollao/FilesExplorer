@@ -3,7 +3,7 @@ require_once(dirname(__FILE__) . '/class/FilesExplorerServer.php');
 
 // Establece los parametros que no necesariamente deben ser conocidos por el navegador por cuestiones de seguridad.
 FilesExplorerServer::setBaseDirFiles(dirname(__FILE__) . '/root_files/');
-FilesExplorerServer::setAllowedActions(['upload', 'addfolder', 'rename', 'move', 'delete']);
+FilesExplorerServer::setAllowedActions(['upload', 'addfolder', 'download', 'shared', 'rename', 'move', 'delete']);
 // Define el token con el cual se asegura la sesion
 $token = FilesExplorerServer::generateToken();
 ?>

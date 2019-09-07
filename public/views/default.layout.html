@@ -1,12 +1,12 @@
-<!-- files_handler_container -->
-<div id="files_handler_container" class="w3-row disableselect">
+<!-- files_explorer_container -->
+<div data-id="files_explorer_container" class="w3-row disableselect">
     <div class="w3-col l12 w3-padding">
         <!-- modal -->
-        <div id="files-modal" class="w3-modal" style="padding-top: 50px; " data-modal-container>
+        <div data-id="files-modal" class="w3-modal" style="padding-top: 50px; " data-modal-container>
             <div class="w3-modal-content" style="display: table; width: auto">
                 <div class="w3-container" style="min-height: 40px; padding: 0">
                     <span class="modal-close" data-modal-close>&times;</span>
-                    <div id="files-modal-content">
+                    <div data-id="files-modal-content">
                         <!-- dynamic content -->
                     </div>
                 </div>
@@ -15,30 +15,30 @@
         <!-- modal -->
 
         <!-- files_bar_buttons-->
-        <nav id="files_bar_buttons" style="text-align: right">
+        <nav data-id="files_bar_buttons" style="text-align: right">
             <div class="circle-loader" style="float: left" data-id="destination"></div>
-            
-            <img id="btnUpLevelDirectory" class="icon-btn" title="Escalar directorio" 
-                 src="external_libs/svg/level-up-alt.svg"/>
-            <img id="btnAddFolder" class="icon-btn" title="Nueva carpeta" 
-                 src="external_libs/svg/folder-plus.svg"/>
-            <img id="btnUploadFile" class="icon-btn"  title="Subir archivo" 
-                 src="external_libs/svg/file-upload.svg"/>
-            <img id="btnPaste" data-class-disabled="icon-btn w3-disabled" data-class-enabled="icon-btn w3-border-blue" 
-                 title="Pegar" src="external_libs/svg/paste.svg"/>
+
+            <img data-id="btnUpLevelDirectory" class="icon-btn" title="Escalar directorio" 
+                 src="./external_libs/svg/level-up-alt.svg"/>
+            <img data-id="btnAddFolder" class="icon-btn" title="Nueva carpeta" 
+                 src="./external_libs/svg/folder-plus.svg"/>
+            <img data-id="btnUploadFile" class="icon-btn"  title="Subir archivo" 
+                 src="./external_libs/svg/file-upload.svg"/>
+            <img data-id="btnPaste" class="icon-btn" data-class-disabled="w3-disabled" data-class-enabled="w3-border-blue" 
+                 title="Pegar" src="./external_libs/svg/paste.svg"/>
             <!--            <div style="width: 15px; display: inline-block;"></div>
                         <img id="btnMoreOptions" class="icon-btn" title="Mas opciones" 
-                             src="external_libs/svg/ellipsis-v.svg"/>-->
+                             src="./external_libs/svg/ellipsis-v.svg"/>-->
         </nav>
         <!-- /files_bar_buttons -->
 
         <!-- files_breadcrumb_content -->
-        <nav id="files_breadcrumb_content" aria-label="breadcrumb" style="margin-top:10px">
+        <nav data-id="files_breadcrumb_content" aria-label="breadcrumb" style="margin-top:10px">
             <ul class="w3-breadcrumb w3-border w3-round" style="padding: 5px 10px;">
                 <li>
                     <a href="#"> 
                         <img title="home" style="width: 26px; height: 26px; cursor:pointer;" 
-                             src="external_libs/svg/home.svg"/>
+                             src="./external_libs/svg/home.svg"/>
                     </a>
                 </li>
             </ul>
@@ -46,7 +46,7 @@
         <!-- /files_breadcrumb_content -->
 
         <!-- files_display_content -->
-        <div id="files_display_content" style="max-height: 500px; overflow-y: auto; overflow-x: hidden" class="w3-border w3-round">
+        <div data-id="files_display_content" style="max-height: 500px; overflow-y: auto; overflow-x: hidden" class="w3-border w3-round">
             <table class="w3-table-all w3-small">
                 <thead>
                     <tr class="w3-light-blue"> 
@@ -67,26 +67,26 @@
         <!-- /files_display_content -->
     </div>
 </div>
-<!-- /files_handler_container -->
+<!-- /files_explorer_container -->
 
 <template id="template_row">
     <tr class="w3-hover-light-blue">
         <td style="width: 80px; text-align: center;">
-            <img class="icon-file-type" src="" />
+            <img class="icon-file-type" />
         </td>
         <td style="vertical-align: bottom"></td>
         <td style="vertical-align: bottom; text-align: right;"></td>
         <td style="text-align: right;">
-            <img name="download" title="Descargar" src="external_libs/svg/download.svg" 
-                 data-class-enabled="icon-btn-row" data-class-disabled="icon-btn-row w3-disabled" />
-            <img name="move" title="Mover" src="external_libs/svg/cut.svg" 
-                 data-class-enabled="icon-btn-row" data-class-disabled="icon-btn-row w3-disabled" />
-            <img name="shared" title="Copiar enlace" src="external_libs/svg/link.svg" 
-                 data-class-enabled="icon-btn-row" data-class-disabled="icon-btn-row w3-disabled" />
-            <img name="edit" title="Renombrar" src="external_libs/svg/edit.svg" 
-                 data-class-enabled="icon-btn-row" data-class-disabled="icon-btn-row w3-disabled" />
-            <img name="delete" title="Borrar" src="external_libs/svg/trash-alt.svg" 
-                 data-class-enabled="icon-btn-row" data-class-disabled="icon-btn-row w3-disabled" />
+            <img name="download" title="Descargar" src="./external_libs/svg/download.svg" 
+                 class="icon-btn-row" data-class-disabled="w3-disabled" />
+            <img name="move" title="Mover" src="./external_libs/svg/cut.svg" 
+                 class="icon-btn-row" data-class-disabled="w3-disabled" />
+            <img name="shared" title="Copiar enlace" src="./external_libs/svg/link.svg" 
+                 class="icon-btn-row" data-class-disabled="w3-disabled" />
+            <img name="edit" title="Renombrar" src="./external_libs/svg/edit.svg" 
+                 class="icon-btn-row" data-class-disabled=" w3-disabled" />
+            <img name="delete" title="Borrar" src="./external_libs/svg/trash-alt.svg" 
+                 class="icon-btn-row" data-class-disabled="w3-disabled" />
         </td>
     </tr>
 </template>
@@ -108,11 +108,11 @@
             <h5>Crear carpeta</h5>
         </div>
         <div class="w3-container w3-padding">
-            <form id="form_add_folder">
+            <form data-id="form_add_folder">
                 <label>Nombre</label>
                 <input type="text" class="w3-input w3-border w3-round w3-small" name="name" value="" placeholder="" autocomplete="off">
                 <button class="w3-button w3-white w3-border w3-round w3-margin-top">Crear
-                    <img class="icon-btn-row" style="width: 14px; height: 14px;" src="external_libs/svg/paper-plane.svg"/>
+                    <img class="icon-btn-row" style="width: 14px; height: 14px;" src="./external_libs/svg/paper-plane.svg"/>
                 </button>
             </form>
         </div>
@@ -125,7 +125,7 @@
             <h5>Subir archivo</h5>
         </div>
         <div class="w3-container w3-padding">
-            <form id="form_upload_files" enctype="multipart/form-data" accept-charset="UTF-8">
+            <form data-id="form_upload_files" enctype="multipart/form-data" accept-charset="UTF-8">
                 <div class="w3-bar w3-round  w3-border">
                     <label type="button" class="w3-bar-item w3-button">
                         Seleccionar
@@ -134,7 +134,7 @@
                     <input readonly="" type="text" class="w3-bar-item">
                 </div>
                 <button type="submit" class="w3-button w3-white w3-border w3-round w3-margin-top">Subir
-                    <img class="icon-btn-row" style="width: 14px; height: 14px;" src="external_libs/svg/paper-plane.svg"/>
+                    <img class="icon-btn-row" style="width: 14px; height: 14px;" src="./external_libs/svg/paper-plane.svg"/>
                 </button>
             </form>
         </div>
@@ -147,7 +147,7 @@
             <h5>Renombrar</h5>
         </div>
         <div class="w3-container w3-padding">
-            <form id="form_rename_file">
+            <form data-id="form_rename_file">
                 <label>Nuevo nombre</label>
                 <input type="text" class="w3-input w3-border w3-round w3-small" name="newname" value="" placeholder="" autocomplete="off">
                 <button type="button" class="w3-button w3-white w3-border w3-round w3-margin-top" name="send">Aceptar</button>

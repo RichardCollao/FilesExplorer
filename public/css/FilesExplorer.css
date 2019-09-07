@@ -1,10 +1,9 @@
-#FilesExplorerContent{
-    /*border:1px solid whitesmoke;*/
-    border:1px solid red;
+[data-id="files_explorer_container"]{
+    border:1px solid whitesmoke;
     width:100%;
 }
 
-#files_bar_buttons .icon-btn{
+[data-id="files_bar_buttons"] .icon-btn{
     text-align: right;
     border: 1px solid silver;
     width: 35px;
@@ -14,41 +13,45 @@
     border-radius: 4px;
 }
 
-#files_bar_buttons .icon-btn:hover {
+[data-id="files_bar_buttons"] .icon-btn:hover {
     color: #000!important;
     background-color: whitesmoke !important;
     cursor: pointer;
 }
 
-#files_display_content .icon-btn-row{
+[data-id="files_breadcrumb"] li{
+    cursor: pointer;
+}
+
+[data-id="files_display_content"] .icon-btn-row{
     width: 30px;
     height: 24px;
     padding: 3px;
     border: 1px solid silver;
+    border: 1px solid blue;
     border-radius: 4px;
     background-color: whitesmoke;
+    display: none;
 }
-#files_display_content .icon-btn-row:hover {
+
+[data-id="files_display_content"] .icon-btn-row:hover {
     color: #000!important;
     background-color: #ccc!important;
     cursor: pointer;
 }
-#files_display_content .icon-file-type{
+
+[data-id="files_display_content"] .icon-file-type{
     width: 30px;
     height: 24px;
     cursor: pointer;
 }
 
-#files_breadcrumb li{
-    cursor: pointer;
-}
-
 /* Tabla contenedora de archivos */
-#files_display table{
+[data-id="files_display_content"] table{
     border:1px solid silver;
 }
 
-#files_display table td{
+[data-id="files_display_content"] table td{
     padding:5px 10px;
     vertical-align: bottom;
     overflow: hidden;/*Oculta el desborde*/
@@ -56,13 +59,13 @@
     white-space: nowrap;/*Evita que las tablas se expandan fuera de la pantalla*/
 }
 
-#files_display table tr td:nth-child(1) , td:nth-child(3) , td:nth-child(4) {
+[data-id="files_display_content"] table tr td:nth-child(1) , td:nth-child(3) , td:nth-child(4) {
     width: 100px;
     min-width: 100px;
     max-width: 100px;
 }
 
-#files_display table tr td:nth-child(5) {
+[data-id="files_display_content"] table tr td:nth-child(5) {
     width: 200px;
     min-width: 200px;
     max-width: 200px;

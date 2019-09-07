@@ -13,6 +13,7 @@ class FilesExplorerServer {
         }
 
         $post = $this->sanitizePost($_POST);
+        $this->_out['allowed_actions'] = $_SESSION['filesexplorer']['allowed_actions'];
 
         if ($this->validateToken($post['token'])) {
             $this->resolveAction($post);
@@ -33,7 +34,6 @@ class FilesExplorerServer {
 
     private function resolveAction($post) {
         $action = $post['action'];
-
         if (is_callable(array($this, $action))) {
             if ($this->isAllowedAction($action)) {
                 $this->$action($post);
@@ -57,7 +57,6 @@ class FilesExplorerServer {
             }
             return $post;
         } else {
-
             $post = trim($post);
             $post = preg_replace(['#\.\./#', '#\./#', '#\\\\#'], '', $post);
             return $post;
@@ -91,12 +90,10 @@ class FilesExplorerServer {
     }
 
     private function isAllowedAction(string $action) {
-        if ($action !== 'displaylist' && $action !== 'download') {
-            if (!in_array($action, $_SESSION['filesexplorer']['allowed_actions'])) {
-                return false;
-            }
+        if (in_array($action, $_SESSION['filesexplorer']['allowed_actions']) || $action == 'displaylist') {
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -297,7 +294,7 @@ class FilesExplorerServer {
         $path_relative = $data['path_relative'];
         $oldname = $data['oldname'];
         $newname = $data['newname'];
-        $dir = $_SESSION['filesexplorer']['base_dir'] . $path_relative ;
+        $dir = $_SESSION['filesexplorer']['base_dir'] . $path_relative;
 
         if (file_exists($dir . $oldname)) {
             try {
