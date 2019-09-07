@@ -16,10 +16,10 @@ PHP 7.x >
 ```php
 require_once(dirname(__FILE__) . '/class/FilesExplorerServer.php');
 ```
-Antes de volcar la vista en el navegador es necesario salvar algunos parámetros en el servidor para que este pueda responder adecuadamente a la peticiones asíncronas que se realizaran desde el navegador.
+Antes de volcar la vista en el navegador es necesario salvar algunos parámetros en el servidor para que este pueda responder adecuadamente a las peticiones asíncronas que se realizaran desde el navegador.
 
 
-Define el directorio base el cual no necesariamente tiene que ser parte del dominio publico, sin embargo si este se establece en un directorio privado se recomienda desactivar el botón clipboard ya que los enlaces generados no apuntaran al archivo por encontrarse fuera del alcance publico.
+Definir el directorio base, el cual no necesariamente tiene que ser parte del dominio publico, sin embargo si este se establece en un directorio privado se recomienda desactivar el botón clipboard ya que los enlaces generados no apuntaran al archivo por encontrarse fuera del dominio publico.
 Es importante dar permisos de escritura al directorio raíz donde se alojaran los archivos que por defecto es  root_files 
 
 ```php
