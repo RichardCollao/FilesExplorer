@@ -150,7 +150,7 @@ class FilesExplorerClient {
                 // Llama a la funcion callback y pasa el resultado como argumento
                 response.text().then(
                         function (response) {
-//                            console.log(response);
+                            // console.log(response);
                             try {
                                 // Parsea los datos recibidos en un objeto json y llama la funcion callback
                                 var json = JSON.parse(response);
@@ -208,8 +208,10 @@ class FilesExplorerClient {
     // reemplaza la url relativa por abosuluta
     convertUrlRelativesToAbsolute() {
         Array.from(this.element.querySelectorAll('img')).forEach(img => {
-            let src = img.getAttribute('src');
-            img.src = src.replace(/\.\//gi, this.scriptPath);
+            let src = img.dataset.src;
+            if (src) {
+                img.src = src.replace(/\.\//gi, this.scriptPath);
+            }
         });
     }
 
@@ -638,6 +640,8 @@ class FilesExplorerClient {
         filesModalBody.innerHTML = '';
         var nodeClone = document.importNode(template.content, true);
         filesModalBody.appendChild(nodeClone);
+        // Convierte rutas relativas en absolutas
+        this.convertUrlRelativesToAbsolute();
     }
 
     showModal() {
