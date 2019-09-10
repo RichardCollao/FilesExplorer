@@ -1,8 +1,8 @@
 <!-- files_explorer_container -->
-<div data-id="files_explorer_container" class="w3-row disableselect">
+<div data-id="files_explorer_container" class="w3-row unselect-text">
     <div class="w3-col l12 w3-padding">
         <!-- modal -->
-        <div data-id="files-modal" class="w3-modal" style="padding-top: 50px; " data-modal-container>
+        <div data-id="files-modal" class="w3-modal" style="padding-top: 50px;" data-modal-container>
             <div class="w3-modal-content" style="display: table; width: auto">
                 <div class="w3-container" style="min-height: 40px; padding: 0">
                     <span class="modal-close" data-modal-close>&times;</span>
@@ -24,7 +24,7 @@
                  data-src="./external_libs/svg/folder-plus.svg"/>
             <img data-id="btnUploadFile" class="icon-btn"  title="Subir archivo" 
                  data-src="./external_libs/svg/file-upload.svg"/>
-            <img data-id="btnPaste" class="icon-btn" data-class-disabled="w3-disabled" data-class-enabled="w3-border-blue" 
+            <img data-id="btnPaste" class="icon-btn" data-class-enabled="w3-border-blue" 
                  title="Pegar" data-src="./external_libs/svg/paste.svg"/>
             <!--            <div style="width: 15px; display: inline-block;"></div>
                         <img id="btnMoreOptions" class="icon-btn" title="Mas opciones" 
@@ -78,15 +78,15 @@
         <td style="vertical-align: bottom; text-align: right;"></td>
         <td style="text-align: right;">
             <img name="download" title="Descargar" data-src="./external_libs/svg/download.svg" 
-                 class="icon-btn-row" data-class-disabled="w3-disabled" />
+                 class="icon-btn"/>
             <img name="move" title="Mover" data-src="./external_libs/svg/cut.svg" 
-                 class="icon-btn-row" data-class-disabled="w3-disabled" />
+                 class="icon-btn"/>
             <img name="shared" title="Copiar enlace" data-src="./external_libs/svg/link.svg" 
-                 class="icon-btn-row" data-class-disabled="w3-disabled" />
+                 class="icon-btn"/>
             <img name="edit" title="Renombrar" data-src="./external_libs/svg/edit.svg" 
-                 class="icon-btn-row" data-class-disabled=" w3-disabled" />
+                 class="icon-btn"/>
             <img name="delete" title="Borrar" data-src="./external_libs/svg/trash-alt.svg" 
-                 class="icon-btn-row" data-class-disabled="w3-disabled" />
+                 class="icon-btn"/>
         </td>
     </tr>
 </template>
@@ -126,13 +126,19 @@
         </div>
         <div class="w3-container w3-padding">
             <form data-id="form_upload_files" enctype="multipart/form-data" accept-charset="UTF-8">
-                <div class="w3-bar w3-round  w3-border">
-                    <label type="button" class="w3-bar-item w3-button">
+
+                <div class="custom-input-file">
+                    <label class="item icon-btn btn-custom" >
                         Seleccionar
                         <input name="files[]" style="display: none" multiple="multiple" type="file" />
                     </label>
-                    <input readonly="" type="text" class="w3-bar-item">
+                    <div data-out class="item truncate" style="width: 100%"></div>
                 </div>
+
+
+
+
+
                 <button type="submit" class="w3-button w3-white w3-border w3-round w3-margin-top">Subir
                     <img class="icon-btn-row" style="width: 14px; height: 14px;" data-src="./external_libs/svg/paper-plane.svg"/>
                 </button>

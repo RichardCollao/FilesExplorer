@@ -1,42 +1,39 @@
 [data-id="files_explorer_container"]{
-    border:1px solid whitesmoke;
     width:100%;
+    border: 1px solid silver;
+    border-radius: 4px;
 }
 
-[data-id="files_bar_buttons"] .icon-btn{
-    text-align: right;
+[data-id="files_explorer_container"] .icon-btn-disbled{
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+[data-id="files_explorer_container"] .icon-btn{
     border: 1px solid silver;
-    width: 35px;
-    height: 30px;
-    padding: 4px;
     cursor: pointer;
     border-radius: 4px;
 }
 
-[data-id="files_bar_buttons"] .icon-btn:hover {
+[data-id="files_explorer_container"] .icon-btn:hover {
     color: #000!important;
     background-color: whitesmoke !important;
     cursor: pointer;
 }
 
-[data-id="files_breadcrumb"] li{
-    cursor: pointer;
+[data-id="files_bar_buttons"] .icon-btn{
+    width: 35px;
+    height: 30px;
+    padding: 4px;
 }
 
-[data-id="files_display_content"] .icon-btn-row{
+[data-id="files_display_content"] .icon-btn{
     width: 30px;
     height: 24px;
     padding: 3px;
-    border: 1px solid silver;
-    border: 1px solid blue;
-    border-radius: 4px;
-    background-color: whitesmoke;
-    display: none;
 }
 
-[data-id="files_display_content"] .icon-btn-row:hover {
-    color: #000!important;
-    background-color: #ccc!important;
+[data-id="files_breadcrumb"] li{
     cursor: pointer;
 }
 
@@ -71,11 +68,31 @@
     max-width: 200px;
 }
 
+.custom-input-file{
+    display: flex;
+    width: 100%;
+    background-color: inherit;
+    color:inherit;
+    border: 1px solid silver;
+    white-space: nowrap;
+    border-radius: 4px;
+}
+.custom-input-file .btn-custom{
+    background-color: whitesmoke;
+    border-radius: 0; 
+    border: 0; 
+    border-right: 1px solid silver;
+}
+
+.custom-input-file .item{
+    display: table-cell;
+    padding: 10px;
+}
 
 
 /* Evita que las tablas se expandan fuera de la pantalla */
 .force-one-row{
-    overflow:hidden;
+    overflow: hidden;
     white-space: nowrap;
 }
 /* Oculta el desborde */
@@ -83,9 +100,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-/* Fuerza todas las palabras que son muy largas al encontrarse con el límite del ancho 
-de su contenedor se corten y sigan en la línea de abajo */
-.breakAll {word-break: break-all;}
 
 /* Estilo del boton close del modal */
 .modal-close {
@@ -99,15 +113,15 @@ de su contenedor se corten y sigan en la línea de abajo */
 }
 
 /*Bloquea la seleccion de texto*/
-.disableselect{
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.unselect-text {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+    supported by Chrome and Opera */
 }
-
 /* Loading... */
 /* Circle rotate */
 .circle-loader {

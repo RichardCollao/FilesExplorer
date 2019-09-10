@@ -7,7 +7,6 @@ class FilesExplorerClient {
         this.tempFormData = new FormData();
         this.idElement = idElement;
         this.element = document.querySelector('#' + this.idElement);
-//        this.element.classList.add('files_display_content');
 
         // Obtiene la url real del script FilesExplorerClient.js
         var url = document.querySelector('script[src$="FilesExplorerClient.js"]').src;
@@ -27,6 +26,8 @@ class FilesExplorerClient {
         // Carga el layout y asigna los correspondientes eventos a los botones
         this.loadHtml(this.layout, function (str) {
             this.element.innerHTML = str;
+            // Convierte rutas relativas en absolutas
+            this.convertRelativeImagePathToAbsolute(this.element);
 
             // Asigna el evento click a todos los botones closet de los elementos .modal-container
             Array.from(this.element.querySelectorAll('[data-modal-close]')).forEach(link => {
@@ -48,7 +49,7 @@ class FilesExplorerClient {
                     var numFiles = input.files.length ? input.files.length : 1;
                     var nameFile = input.value.replace(/\\/g, '/').replace(/.*\//, '');
                     var textLabel = numFiles > 1 ? numFiles + ' files selected' : nameFile;
-                    this.element.querySelector('[data-id="form_upload_files"] input[type="text"]').value = textLabel;
+                    this.element.querySelector('[data-id="form_upload_files"] [data-out]').innerHTML = textLabel;
                 }.bind(this);
             }.bind(this);
 
@@ -58,9 +59,8 @@ class FilesExplorerClient {
                 this.element.querySelector('[data-id="form_add_folder"]').onsubmit = this.addFolder.bind(this);
             }.bind(this);
 
-//            this.element.querySelector('[data-id="btnPaste"]').className = this.element.querySelector('[data-id="btnPaste"]').dataset.classDisabled;
             let btnPaste = this.element.querySelector('[data-id="btnPaste"]');
-            btnPaste.classList.add(btnPaste.dataset.classDisabled);
+            btnPaste.classList.add('icon-btn-disbled');
 
             // Actualiza por primera vez para mostrar listar los archivos.
             this.refresh();
@@ -199,15 +199,14 @@ class FilesExplorerClient {
                     this.refreshDisplayList(json);
                     // Actualiza la barra de navegacion
                     this.refreshBreadcurmb();
-                    // Convierte rutas relativas en absolutas
-                    this.convertUrlRelativesToAbsolute();
+
                 }.bind(this)
                 , formData);
     }
 
     // reemplaza la url relativa por abosuluta
-    convertUrlRelativesToAbsolute() {
-        Array.from(this.element.querySelectorAll('img')).forEach(img => {
+    convertRelativeImagePathToAbsolute(element) {
+        Array.from(element.querySelectorAll('img')).forEach(img => {
             let src = img.dataset.src;
             if (src) {
                 img.src = src.replace(/\.\//gi, this.scriptPath);
@@ -346,7 +345,7 @@ class FilesExplorerClient {
         let btnPaste = this.element.querySelector('[data-id="btnPaste"]');
 
         btnPaste.onclick = this.doMoveFiles.bind(this, file);
-        btnPaste.classList.remove(btnPaste.dataset.classDisabled);
+        btnPaste.classList.remove('icon-btn-disbled');
         btnPaste.classList.add(btnPaste.dataset.classEnabled);
     }
 
@@ -355,7 +354,7 @@ class FilesExplorerClient {
 
         let btnPaste = this.element.querySelector('[data-id="btnPaste"]');
         btnPaste.onclick = null;
-        btnPaste.classList.add(btnPaste.dataset.classDisabled);
+        btnPaste.classList.add('icon-btn-disbled');
         btnPaste.classList.remove(btnPaste.dataset.classEnabled);
 
         // Envia la peticion al servidor
@@ -476,11 +475,10 @@ class FilesExplorerClient {
             // Copia e inserta el template para que sea renderizado y asi poder asignar eventos
             var tpl = this.element.querySelector('#template_row');
             var copy = document.importNode(tpl.content, true);
+            var tr = copy.querySelector("tr");
+            // Convierte rutas relativas en absolutas
+            this.convertRelativeImagePathToAbsolute(tr);
 
-            tbody.appendChild(copy);
-
-            // Obtiene la ultima fila correspondiente a la fila copiada
-            var tr = tbody.querySelector('tr:last-child');
             var td = tr.querySelectorAll('td');
 
             var img_icon_type = td[0].querySelector('img');
@@ -516,8 +514,7 @@ class FilesExplorerClient {
                     btnDownload.disabled = true;
                     btnDownload.title = '';
                     // Asigna la clase CSS que deshabilita el boton "Download" por tratarse de un directorio
-                    btnDownload.classList.add(btnDownload.dataset.classDisabled);
-
+                    btnDownload.classList.add('icon-btn-disbled');
                 } else {
                     btnDownload.onclick = this.downloadFile.bind(this, val.basename);
                 }
@@ -525,20 +522,26 @@ class FilesExplorerClient {
 
             if (data.allowed_actions.indexOf('move') !== -1) {
                 btnMove.onclick = this.prepareMoveFiles.bind(this, val.basename);
-                btnMove.style.display = 'inline-block';
+            } else {
+                btnMove.classList.add('icon-btn-disbled');
             }
             if (data.allowed_actions.indexOf('shared') !== -1) {
                 btnShared.onclick = this.clipboardFile.bind(this, val.basename);
-                btnShared.style.display = 'inline-block';
+            } else {
+                btnShared.classList.add('icon-btn-disbled');
             }
             if (data.allowed_actions.indexOf('rename') !== -1) {
-                btnEdit.style.display = 'inline-block';
                 btnEdit.onclick = this.showFormRenameFile.bind(this, val.basename);
+            } else {
+                btnEdit.classList.add('icon-btn-disbled');
             }
             if (data.allowed_actions.indexOf('delete') !== -1) {
                 btnDelete.onclick = this.confirmDeleteFile.bind(this, val.basename);
-                btnDelete.style.display = 'inline-block';
+            } else {
+                btnDelete.classList.add('icon-btn-disbled');
             }
+
+            tbody.appendChild(tr);
         }.bind(this));
     }
 
@@ -641,7 +644,7 @@ class FilesExplorerClient {
         var nodeClone = document.importNode(template.content, true);
         filesModalBody.appendChild(nodeClone);
         // Convierte rutas relativas en absolutas
-        this.convertUrlRelativesToAbsolute();
+        this.convertRelativeImagePathToAbsolute(filesModal);
     }
 
     showModal() {

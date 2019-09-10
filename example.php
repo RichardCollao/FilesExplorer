@@ -21,15 +21,7 @@ $token = FilesExplorerServer::generateToken();
             <h3>Explorador de archivos</h3>
         </div>
 
-        <div id="files_container_display" style="width: 960px; margin: 15px auto; border:1px solid silver"></div>
-
-        <div style="width: 500px; margin: 50px auto; text-align: center">
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-                <img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
-            </a>
-            <br />
-            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Dataset" property="dct:title" rel="dct:type">FilesExplorerPhpJs</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.richardcollao.cl/aboutme" property="cc:attributionName" rel="cc:attributionURL">Richard Collao</a> is licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional License</a>.
-        </div>
+        <div id="files_container_display" style="width: 960px; margin: 15px auto;"></div>
 
         <script type="text/javascript">
             window.onload = function () {
