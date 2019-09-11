@@ -82,6 +82,7 @@
     border-radius: 0; 
     border: 0; 
     border-right: 1px solid silver;
+    margin: 0;
 }
 
 .custom-input-file .item{
