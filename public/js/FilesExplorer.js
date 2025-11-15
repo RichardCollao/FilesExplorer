@@ -144,12 +144,12 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
                 <div class="small text-truncate mb-2" data-grid-filename style="max-width: 100%;" title="">
                     <!-- filename -->
                 </div>
-                <div class="d-flex justify-content-between align-items-center px-2">
+                <div class="d-flex justify-content-between align-items-center px-0">
                     <div class="text-muted" style="font-size: 0.75rem;" data-grid-size>
                         <!-- size -->
                     </div>
                     <div class="dropdown">
-                        <button class="btn btn-sm btn-light p-1" type="button" data-bs-toggle="dropdown"
+                        <button class="btn btn-sm btn-light p-0" type="button" data-bs-toggle="dropdown"
                             data-bs-boundary="viewport" aria-expanded="false">
                             <img class="icon-btn" alt="Descargar"
                                 data-src="./public/img/ui/three-dots-vertical.svg" />
