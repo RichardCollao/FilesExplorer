@@ -71,10 +71,10 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
             <table class="table table-hover table-sm table-bordered">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col" style="width: 50px; text-align: center;">&nbsp;</th>
-                        <th scope="col">Filename</th>
-                        <th scope="col" style="width: 100px; text-align: right;">Size</th>
-                        <th scope="col" style="min-width: 150px; max-width: 150px; text-align: center;">Operations</th>
+                        <th scope="col" style="min-width: 80px; max-width: 80px; text-align: center;">&nbsp;</th>
+                        <th scope="col" style="width: 80%;">Filename</th>
+                        <th scope="col" style="min-width: 100px; max-width: 100px; text-align: right;">Size</th>
+                        <th scope="col" style="min-width: 180px; max-width: 180px; text-align: center;">Operations</th>
                     </tr>
                     <tr style="display: none;">
                         <th scope="col" colspan="4" class="text-center text-muted">No se encontraron archivos</th>
@@ -1380,7 +1380,7 @@ class FilesExplorer {
         if (genericByExt[e] && this._availableFileIcons.has(genericByExt[e])) return genericByExt[e];
 
         // 5) Fallback to 'file-alt' (default generic file icon)
-        return this._availableFileIcons.has('file-alt') ? 'file-alt' : 'file-alt';
+        return 'file-alt';
     }
 
     setAlert(type, title, content) {
