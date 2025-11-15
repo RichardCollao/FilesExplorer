@@ -483,7 +483,6 @@ class FilesExplorer {
         if (btnPaste) {
             btnPaste.onclick = null;
             btnPaste.disabled = true;
-            btnPaste.classList.remove(btnPaste.dataset.classEnabled);
             btnPaste.style.display = 'none';
         }
     }
@@ -854,7 +853,7 @@ class FilesExplorer {
         // Mostrar el botón Pegar cuando el usuario inicia una operación "Mover"
         btnPaste.onclick = this.doMoveFiles.bind(this);
         btnPaste.disabled = false;
-        btnPaste.classList.add(btnPaste.dataset.classEnabled);
+        btnPaste.classList.add('btn-primary');
         // Mostrar visualmente el control (estaba oculto por defecto)
         btnPaste.style.display = '';
     }
@@ -870,7 +869,6 @@ class FilesExplorer {
         // Ocultar y desactivar el botón Pegar después de completar el pegado
         btnPaste.onclick = null;
         btnPaste.disabled = true;
-        btnPaste.classList.remove(btnPaste.dataset.classEnabled);
         btnPaste.style.display = 'none';
 
         // Ya no hay una operación mover pendiente
