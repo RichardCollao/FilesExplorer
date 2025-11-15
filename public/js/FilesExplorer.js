@@ -109,24 +109,24 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
         <td class="align-middle"></td>
         <td class="text-end align-middle"></td>
 
-        <td class="text-center" style="min-width: 220px;">
-            <button type="button" class="btn btn-sm btn-light" data-action="download" data-bs-toggle="tooltip"
+        <td class="text-center">
+            <button type="button" class="btn btn-link p-0" data-action="download" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Descargar">
                 <img class="icon-btn" alt="Descargar" data-src="./public/img/ui/download.svg" />
             </button>
-            <button type="button" class="btn btn-sm btn-light" data-action="move" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-link p-0" data-action="move" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Mover">
                 <img class="icon-btn" alt="Mover" data-src="./public/img/ui/cut.svg" />
             </button>
-            <button type="button" class="btn btn-sm btn-light" data-action="shared" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-link p-0" data-action="shared" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Copiar enlace">
                 <img class="icon-btn" alt="Copiar enlace" data-src="./public/img/ui/link.svg" />
             </button>
-            <button type="button" class="btn btn-sm btn-light" data-action="edit" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-link p-0" data-action="edit" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Renombrar">
                 <img class="icon-btn" alt="Renombrar" data-src="./public/img/ui/edit.svg" />
             </button>
-            <button type="button" class="btn btn-sm btn-light" data-action="delete" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-link p-0" data-action="delete" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Borrar">
                 <img class="icon-btn" alt="Borrar" data-src="./public/img/ui/trash.svg" />
             </button>
@@ -1118,7 +1118,7 @@ class FilesExplorer {
     refreshDisplayGrid(data) {
         const gridContainer = this.element.querySelector('[data-id="files_display_grid"] [data-grid-container]');
         const emptyMessage = this.element.querySelector('[data-id="files_display_grid"] [data-grid-empty]');
-        
+
         gridContainer.innerHTML = '';
 
         if (data.files.length < 1) {
@@ -1332,7 +1332,7 @@ class FilesExplorer {
             li.className = 'breadcrumb-item';
             const a = document.createElement('a');
             a.href = '#';
-            a.className = 'text-decoration-none';
+            a.className = 'text-decoration-none link-dark';
             a.textContent = this.pathRelativeArray[k];
             a.onclick = (e) => {
                 e.preventDefault();

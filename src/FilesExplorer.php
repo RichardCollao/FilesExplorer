@@ -417,7 +417,6 @@ class FilesExplorer {
             if (file_exists($newPath)) {
                 throw new \RuntimeException('Ya existe un archivo o directorio con ese nombre');
             }
-            
             if (!rename($oldPath, $newPath)) {
                 throw new \RuntimeException('No se pudo renombrar el archivo o directorio');
             }
