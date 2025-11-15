@@ -308,6 +308,8 @@ class ModalManager {
         this.scriptPath = scriptPath;
         // Bind keyboard handler for ESC close
         this._onKeyDown = this._onKeyDown.bind(this);
+        // Store modal instance to avoid creating multiple instances
+        this._bootstrapModal = null;
     }
 
     setContent(templateId) {
@@ -342,8 +344,11 @@ class ModalManager {
             filesModal.classList.add('show');
             document.addEventListener('keydown', this._onKeyDown);
         } else {
-            const modal = new bootstrap.Modal(filesModal);
-            modal.show();
+            // Reutilizar la instancia existente o crear una nueva
+            if (!this._bootstrapModal) {
+                this._bootstrapModal = new bootstrap.Modal(filesModal);
+            }
+            this._bootstrapModal.show();
         }
     }
 
@@ -356,8 +361,14 @@ class ModalManager {
             filesModal.classList.remove('show');
             document.removeEventListener('keydown', this._onKeyDown);
         } else {
-            const modal = bootstrap.Modal.getInstance(filesModal);
-            if (modal) modal.hide();
+            // Usar la instancia almacenada
+            if (this._bootstrapModal) {
+                this._bootstrapModal.hide();
+            } else {
+                // Fallback: intentar obtener instancia existente
+                const modal = bootstrap.Modal.getInstance(filesModal);
+                if (modal) modal.hide();
+            }
         }
     }
 
@@ -471,6 +482,8 @@ class FilesExplorer {
         ]);
         // Estado cuando se ha iniciado una operación "mover" y queda pendiente el pegado
         this.isMovePending = false;
+        // Tamaño máximo de archivo en MB (por defecto 5MB)
+        this.maxFileSize = 5;
     }
 
     // Cancela cualquier operación de mover pendiente y oculta el botón Pegar
@@ -534,6 +547,13 @@ class FilesExplorer {
         this.element.querySelector('[data-id="btnUploadFile"]').onclick = function () {
             this.setModalContent('template_form_upload');
             this.showModal();
+            
+            // Actualizar el mensaje de tamaño máximo
+            const sizeHint = this.element.querySelector('[data-id="files-modal-content"] [data-max-size-hint]');
+            if (sizeHint) {
+                sizeHint.textContent = `Tamaño máximo por archivo: ${this.maxFileSize}MB`;
+            }
+            
             this.element.querySelector('[data-id="form_upload_files"]').onsubmit = this.uploadFiles.bind(this);
 
             this.element.querySelector('[data-id="form_upload_files"] input[name="files[]"]').onchange = function (event) {
@@ -582,6 +602,14 @@ class FilesExplorer {
 
     setBaseUrlFiles(baseUrlFiles) {
         this.baseUrlFiles = baseUrlFiles;
+    }
+
+    maxFileSizeMb(sizeMb) {
+        if (typeof sizeMb !== 'number' || sizeMb <= 0) {
+            console.error('FilesExplorer.maxFileSizeMb: el tamaño debe ser un número positivo');
+            return;
+        }
+        this.maxFileSize = sizeMb;
     }
 
     setPathRelative(pathRelative = '') {
@@ -725,6 +753,30 @@ class FilesExplorer {
 
     uploadFiles(e) {
         e.preventDefault();
+
+        // Validar tamaño de archivos antes de enviar
+        const fileInput = this.element.querySelector('[data-id="form_upload_files"] input[name="files[]"]');
+        const maxSizeBytes = this.maxFileSize * 1024 * 1024; // Convertir MB a bytes
+        const errors = [];
+
+        if (fileInput.files.length > 0) {
+            for (let i = 0; i < fileInput.files.length; i++) {
+                const file = fileInput.files[i];
+                if (file.size > maxSizeBytes) {
+                    const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                    errors.push(`El archivo "${file.name}" (${sizeMB}MB) excede el tamaño máximo permitido de ${this.maxFileSize}MB`);
+                }
+            }
+        }
+
+        // Si hay errores de validación, mostrarlos y no enviar
+        if (errors.length > 0) {
+            let content = '<p>No se pueden subir los siguientes archivos:</p>';
+            content += this.helperUl(errors);
+            this.setAlert('warning', 'Archivos Demasiado Grandes', content);
+            this.showModal();
+            return;
+        }
 
         // obtiene los datos desde el formulario
         const path_relative = this.getPathRelative();

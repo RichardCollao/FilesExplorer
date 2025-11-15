@@ -31,7 +31,7 @@
             // Configuración del cliente
             filesExplorer.setServerController('controller.php');
             filesExplorer.setPathRelative('');
-
+            filesExplorer.maxFileSizeMb(5);
             // Inicializar explorador
             filesExplorer.start();
         };
