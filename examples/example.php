@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>..:: Files Explorer - Demo ::..</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FilesExplorer estilos esenciales -->
+    <link type="text/css" rel="stylesheet" href="../public/css/FilesExplorer.css" />
+
+    <!-- Bootstrap 5 JS Bundle (incluye Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FilesExplorer -->
+    <script type="text/javascript" src="../public/js/FilesExplorer.js"></script>
+</head>
+
+<body class="bg-light">
+    <div class="container py-4">
+        <div id="files_container_display" style="max-width: 960px; margin: 0 auto;"></div>
+    </div>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            let filesExplorer = new FilesExplorer('files_container_display');
+
+            // Configuración del cliente
+            filesExplorer.setServerController('controller.php');
+            filesExplorer.setPathRelative('');
+
+            // Inicializar explorador
+            filesExplorer.start();
+        };
+    </script>
+</body>
+
+</html>

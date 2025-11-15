@@ -1,96 +1,266 @@
 # FilesExplorer
-Explorador de archivos web open source
-## Descripcion
 
-FilesExplorer es un modulo web open source dedicado a gestionar archivos desde un navegador web con un estilo minimalista y de fácil implementación.
+Explorador de archivos web para PHP con interfaz moderna.
 
-![Image description](https://github.com/RichardCollao/FilesExplorer/blob/master/docs/Captura%20de%20pantalla.png)
+![Screenshot](https://github.com/RichardCollao/FilesExplorer/blob/master/docs/Captura%20de%20pantalla.png)
 
-## Requerimientos
-PHP 7.x >
+## 📋 Descripción
 
+Librería PHP para gestionar archivos desde el navegador. Permite listar, subir, descargar, eliminar, renombrar y mover archivos y carpetas con interfaz Bootstrap 5.
 
+**Características:**
+- ✅ Arquitectura HTTP-agnóstica (testeable)
+- ✅ PSR-4 autoloading
+- ✅ Frontend moderno (Bootstrap 5)
+- ✅ Sin dependencia de sesiones
 
-## Implementación
+## 🔧 Requerimientos
+
+- PHP >= 7.4
+- Extensiones: `json`, `openssl` (para tokens de seguridad, opcional)
+- Servidor web (Apache, Nginx, o PHP built-in server)
+
+## 📦 Instalación
+
+```bash
+git clone https://github.com/RichardCollao/FilesExplorer.git
+cd FilesExplorer
+```
+
+## 🚀 Inicio Rápido
+
+### 1. Prueba la demo
+
+```bash
+cd examples
+php -S localhost:8000
+```
+
+Abre http://localhost:8000/example.php en tu navegador.
+
+### 2. Integración básica
+
+Crea un **endpoint controller** (ver sección "Arquitectura" más abajo):
 
 ```php
-require_once(dirname(__FILE__) . '/class/FilesExplorerServer.php');
+<?php
+// controller.php
+require_once __DIR__ . '/autoload.php';
+
+$config = [
+    'base_dir' => __DIR__ . '/files/',
+    'base_url' => '/files/',
+    'allowed_actions' => ['upload', 'download', 'delete', 'addfolder', 'rename', 'move', 'shared']
+];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $explorer = new \Richard\FilesExplorer\FilesExplorer($config);
+    $result = $explorer->execute($_POST, $_FILES);
+    
+    // Caso especial: descarga de archivos (respuesta binaria)
+    if (isset($result['action']) && $result['action'] === 'download') {
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . $result['filename'] . '"');
+        readfile($result['file_path']);
+        exit;
+    }
+    
+    // Respuesta JSON normal
+    header('Content-Type: application/json');
+    echo json_encode($result);
+    exit;
+}
 ```
-Antes de volcar la vista en el navegador es necesario salvar algunos parámetros en el servidor para que este pueda responder adecuadamente a las peticiones asíncronas que se realizaran desde el navegador.
 
+Crea la **vista HTML**:
 
-Definir el directorio base, el cual no necesariamente tiene que ser parte del dominio publico, sin embargo si este se establece en un directorio privado se recomienda desactivar el botón clipboard ya que los enlaces generados no apuntaran al archivo por encontrarse fuera del dominio publico.
-Es importante dar permisos de escritura al directorio raíz donde se alojaran los archivos que por defecto es  root_files 
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Files Explorer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="public/css/FilesExplorer.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="public/js/FilesExplorer.js"></script>
+</head>
+<body>
+    <div id="files_container"></div>
+    
+    <script>
+        window.onload = function() {
+            let explorer = new FilesExplorer('files_container');
+            explorer.setServerController('controller.php');
+            explorer.setPathRelative('');
+            explorer.start();
+        };
+    </script>
+</body>
+</html>
+```
+
+## 🏗️ Arquitectura
+
+```
+Frontend (JS) → Controller (PHP) → FilesExplorer Core
+```
+
+La librería **no maneja HTTP directamente**, permitiendo:
+- Testear sin servidor web
+- Agregar autenticación personalizada
+- Reutilizar en diferentes contextos
+
+### Respuestas
+
+**JSON** (mayoría): `displaylist`, `upload`, `delete`, etc.
+```php
+header('Content-Type: application/json');
+echo json_encode($result);
+```
+
+**Binaria** (descargas):
+```php
+if (isset($result['action']) && $result['action'] === 'download') {
+    header('Content-Disposition: attachment; filename="' . $result['filename'] . '"');
+    readfile($result['file_path']);
+    exit;
+}
+```
+
+## 📚 API de la Librería
+
+### Constructor
 
 ```php
-FilesExplorerServer::setBaseDirFiles(dirname(__FILE__) . '/root_files/');
+$explorer = new \Richard\FilesExplorer\FilesExplorer([
+    'base_dir' => '/ruta/absoluta/archivos/',  // Requerido
+    'base_url' => '/files/',                   // Para enlaces compartidos
+    'allowed_actions' => ['upload', 'delete']   // Permisos
+]);
 ```
-Obtiene el token con el cual se asegura la sesion
+
+### Método principal
+
 ```php
-$token = FilesExplorerServer::generateToken();
+$result = $explorer->execute(array $requestData, array $files = []): array
 ```
 
+**Parámetros:**
+- `$requestData`: Típicamente `$_POST` (action, path_relative, file, etc.)
+- `$files`: Típicamente `$_FILES` (para uploads)
 
-Este método establece las acciones que serán aceptadas en el servidor, por ejemplo si este modulo es implementado en un sistema que maneja cuentas de usuarios, se podrían restringir las acciones en función del perfil de cada usuario.
+**Retorna:** Array con resultado o errores
 
-```php
-FilesExplorerServer::setAllowedActions(['upload', 'addfolder', 'rename', 'move', 'delete']);
-```
+### Acciones disponibles
 
-El siguiente paso es incluir los archivos necesarios para que el modulo funcione correctamente.
+| Acción | Descripción | Respuesta |
+|--------|-------------|-----------|
+| `displaylist` | Lista archivos/carpetas | JSON con array `files` |
+| `upload` | Sube archivo(s) | JSON confirmación |
+| `download` | Descarga archivo | Metadata (ver sección binarios) |
+| `delete` | Elimina archivo/carpeta | JSON confirmación |
+| `addfolder` | Crea carpeta | JSON confirmación |
+| `rename` | Renombra archivo/carpeta | JSON confirmación |
+| `move` | Mueve archivo/carpeta | JSON confirmación |
+| `shared` | Genera enlace público | JSON con `shared_url` |
 
-La vista utiliza las clases del framework w3.css, pero no se limita solamente a esta librería, ya que es bastante fácil crear un nuevo layout con reglas de estilos personalizadas o basadas en otros framewrok CSS.
 
-Incluye la hoja de estilos correspondientes al framework CSS w3.css
-```html
-<link type="text/css" rel="stylesheet" href="./public/css/w3.css"/>
-```
 
-Incluye la hoja de estilos nativa para la vista 
-```html
-<link type="text/css" rel="stylesheet" href="./public/css/FilesExplorer.css"/>
-```
+## 🎨 Frontend API (JavaScript)
 
-Incluye el escript que contiene la clase responsable de manejar el explorador de archivos.
-```html
-<script type="text/javascript" src="./public/js/FilesExplorerClient.js"></script>
-```
-
-Establece la caja que servira de contenedor, es importante asignar el atributo id el cual debera ser pasado a la clase javascript en su constructor
-```html
-<div id="files_container_display" style="width: 960px; margin: 15px auto; border:1px solid silver"></div>
-```
-Finalmente se inicializa la clase cuando el documento se ha cargado totalmente.
 ```javascript
-<script type="text/javascript">
-    window.onload = function () {
-        let filesExplorerClient = new FilesExplorerClient('files_container_display');
-        // Envia el token creado en el servidor 
-        filesExplorerClient.setToken('<?php echo $token; ?>');
-        // Establece la url que apunta al controlador
-        filesExplorerClient.setServerController('./class/FilesExplorerServer.php');
-        // Establece la url que apunta a la base url que contiene los archivos
-        // filesExplorerClient.setBaseUrlFiles('');
-        // Permite posicionar el explorador sobre un nivel relativo a la ruta establecida como base
-        filesExplorerClient.setPathRelative('');
-        // Inicializa la clase
-        filesExplorerClient.start();
-    };
-</script>
+let explorer = new FilesExplorer('container_id');
+
+// Configuración
+explorer.setServerController('controller.php');  // Requerido
+explorer.setPathRelative('subcarpeta/');         // Opcional
+explorer.setBaseUrlFiles('/files/');             // Opcional
+
+// Iniciar
+explorer.start();
 ```
 
-## Licencia
+**Métodos disponibles:**
+- `start()`: Inicializa y carga listado
+- `setServerController(url)`: Define endpoint
+- `setPathRelative(path)`: Navega a subcarpeta
+- `setBaseUrlFiles(url)`: URL base para archivos estáticos
 
- <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-                <img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+## 🔒 Seguridad
+
+### ⚠️ Advertencias importantes
+
+1. **NO usar en producción sin autenticación**: La demo es educativa, agregar auth/CSRF
+2. **Validar permisos**: Configurar `allowed_actions` según usuario
+3. **Path traversal**: La librería valida rutas, pero revisa `base_dir`
+4. **Límites de upload**: Configura `upload_max_filesize` y `post_max_size` en `php.ini`
+
+### Ejemplo con autenticación
+
+```php
+session_start();
+
+if (!isset($_SESSION['user_logged_in'])) {
+    http_response_code(403);
+    echo json_encode(['errors' => ['No autorizado']]);
+    exit;
+}
+
+// Permisos por rol
+$actions = $_SESSION['user_role'] === 'admin' 
+    ? ['upload', 'download', 'delete', 'addfolder', 'rename', 'move', 'shared']
+    : ['download']; // Solo lectura
+
+$config = [
+    'base_dir' => "/users/{$_SESSION['user_id']}/files/",
+    'base_url' => "/files/{$_SESSION['user_id']}/",
+    'allowed_actions' => $actions
+];
+
+$explorer = new \Richard\FilesExplorer\FilesExplorer($config);
+$result = $explorer->execute($_POST, $_FILES);
+// ... manejar respuesta
+```
+
+## 📁 Estructura
+
+```
+FilesExplorer/
+├── src/FilesExplorer.php         # Librería core
+├── public/                       # Assets (CSS/JS/iconos)
+├── examples/                     # Demo
+├── autoload.php                  # PSR-4 autoloader
+└── README.md
+```
+
+## 📖 Ejemplos
+
+Ver carpeta `examples/` para implementación completa.
+
+
+
+## 🤝 Contribuir
+
+Las contribuciones son bienvenidas. Por favor:
+1. Fork el proyecto
+2. Crea un branch (`git checkout -b feature/AmazingFeature`)
+3. Commit cambios (`git commit -m 'Add: amazing feature'`)
+4. Push al branch (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📜 Licencia
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+    <img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
 </a>
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional License</a>.
+Este proyecto está bajo licencia <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional</a>.
 
-## Versionado
-El proyecto utiliza SemVer para el versionado. Para todas las versiones disponibles, mira los tags en este repositorio.
+## 👥 Autor
 
-## Dependencias
-[W3.CSS Framework](https://www.w3schools.com/w3css/ "W3.CSS Framework")
+Richard Collao - [GitHub](https://github.com/RichardCollao)
 
-[Font Awesome](https://fontawesome.com/icons?d=gallery&m=free "Font Awesome Search Icons:  Search icons...  Search! Search! Start Icons Docs Support Plans Blog")
+## 🔗 Dependencias
+
+- [Bootstrap 5](https://getbootstrap.com/) - Framework CSS
+- [Bootstrap Icons](https://icons.getbootstrap.com/) - Iconografía

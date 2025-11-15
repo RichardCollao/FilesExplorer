@@ -1,2 +1,14 @@
+/.idea/
+/vendor/
+/node_modules/
+.DS_Store
+/.vscode/
+/nbproject/
+/private/
+/.env
+
+# Ignore composer artifacts (optionally)
+/composer.lock
 /nbproject/
 /root_files/
+/HTML5Application/nbproject/private/
