@@ -24,30 +24,30 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
 
                 <button type="button" class="btn btn-sm btn-light" data-id="btnUpLevelDirectory"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Escalar directorio">
-                    <img class="icon-btn" alt="Subir nivel" data-src="./public/img/ui/arrow-return-left.svg" />
+                    <i class="bi bi-arrow-return-left"></i>
                 </button>
                 <button type="button" class="btn btn-sm btn-light" data-id="btnAddFolder" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-title="Nueva carpeta">
-                    <img class="icon-btn" alt="Nueva carpeta" data-src="./public/img/ui/folder-plus.svg" />
+                    <i class="bi bi-folder-plus"></i>
                 </button>
                 <button type="button" class="btn btn-sm btn-light" data-id="btnUploadFile" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-title="Subir archivo">
-                    <img class="icon-btn" alt="Subir archivo" data-src="./public/img/ui/upload.svg" />
+                    <i class="bi bi-upload"></i>
                 </button>
                 <button type="button" class="btn btn-sm btn-light" data-id="btnPaste"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pegar">
-                    <img class="icon-btn" alt="Pegar" data-src="./public/img/ui/paste.svg" />
+                    <i class="bi bi-copy"></i>
                 </button>
             </div>
 
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-light" data-id="btnViewList"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Vista de lista">
-                    <img class="icon-btn" alt="Vista de lista" data-src="./public/img/ui/list.svg" />
+                    <i class="bi bi-list-task"></i>
                 </button>
                 <button type="button" class="btn btn-sm btn-light" data-id="btnViewGrid" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-title="Vista de cuadrícula">
-                    <img class="icon-btn" alt="Vista de cuadrícula" data-src="./public/img/ui/grid.svg" />
+                    <i class="bi bi-grid-3x3-gap"></i>
                 </button>
             </div>
         </nav>
@@ -58,8 +58,7 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
                     <a href="#" class="text-decoration-none">
-                        <img title="home" alt="home" style="width: 20px; height: 20px;"
-                            data-src="./public/img/ui/house.svg" />
+                        <i class="bi bi-house-door" title="home" style="font-size: 20px;"></i>
                     </a>
                 </li>
             </ol>
@@ -104,7 +103,7 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
 <template id="template_row">
     <tr>
         <td class="text-center">
-            <img class="icon-file-type" alt="file icon" />
+            <i class="icon-file-type"></i>
         </td>
         <td class="align-middle"></td>
         <td class="text-end align-middle"></td>
@@ -112,23 +111,23 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
         <td class="text-center">
             <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="download" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Descargar">
-                <img class="icon-btn" alt="Descargar" data-src="./public/img/ui/download.svg" />
+                <i class="bi bi-download"></i>
             </button>
             <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="move" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Mover">
-                <img class="icon-btn" alt="Mover" data-src="./public/img/ui/cut.svg" />
+                <i class="bi bi-scissors"></i>
             </button>
             <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="shared" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Copiar enlace">
-                <img class="icon-btn" alt="Copiar enlace" data-src="./public/img/ui/link.svg" />
+                <i class="bi bi-link-45deg"></i>
             </button>
             <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="edit" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Renombrar">
-                <img class="icon-btn" alt="Renombrar" data-src="./public/img/ui/edit.svg" />
+                <i class="bi bi-pencil-square"></i>
             </button>
             <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="delete" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Borrar">
-                <img class="icon-btn" alt="Borrar" data-src="./public/img/ui/trash.svg" />
+                <i class="bi bi-trash"></i>
             </button>
         </td>
     </tr>
@@ -139,7 +138,7 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
         <div class="card h-100 border">
             <div class="card-body p-2 text-center">
                 <div class="mb-2" data-grid-icon-container>
-                    <img class="icon-file-type-grid" alt="file icon" style="width: 48px; height: 48px;" />
+                    <i class="icon-file-type-grid"></i>
                 </div>
                 <div class="small text-truncate mb-2" data-grid-filename style="max-width: 100%;" title="">
                     <!-- filename -->
@@ -151,40 +150,32 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
                     <div class="dropdown">
                         <button class="btn btn-sm btn-light p-0" type="button" data-bs-toggle="dropdown"
                             data-bs-boundary="viewport" aria-expanded="false">
-                            <img class="icon-btn" alt="Descargar"
-                                data-src="./public/img/ui/three-dots-vertical.svg" />
+                            <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <button class="dropdown-item" type="button" data-action="download">
-                                    <img class="icon-btn me-2" alt="Descargar"
-                                        data-src="./public/img/ui/download.svg" />
-                                    Descargar
+                                    <i class="bi bi-download me-2""></i>Descargar
                                 </button>
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button" data-action="move">
-                                    <img class="icon-btn me-2" alt="Mover" data-src="./public/img/ui/cut.svg" />
-                                    Mover
+                                    <i class="bi bi-scissors me-2"></i>Mover
                                 </button>
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button" data-action="shared">
-                                    <img class="icon-btn me-2" alt="Copiar enlace"
-                                        data-src="./public/img/ui/link.svg" />
-                                    Copiar enlace
+                                    <i class="bi bi-link-45deg me-2""></i>Copiar enlace
                                 </button>
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button" data-action="edit">
-                                    <img class="icon-btn me-2" alt="Renombrar" data-src="./public/img/ui/edit.svg" />
-                                    Renombrar
+                                    <i class="bi bi-pencil-square me-2""></i>Renombrar
                                 </button>
                             </li>
                             <li>
                                 <button class="dropdown-item" type="button" data-action="delete">
-                                    <img class="icon-btn me-2" alt="Borrar" data-src="./public/img/ui/trash.svg" />
-                                    Eliminar
+                                    <i class="bi bi-trash me-2""></i>Eliminar
                                 </button>
                             </li>
                         </ul>
@@ -198,7 +189,7 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
 <template id="template_alert">
     <div class="modal-header" data-alert-header>
         <div class="d-flex align-items-center">
-            <img data-alert-icon alt="alert icon" style="width: 28px; height: 28px;" class="me-3" />
+            <i data-alert-icon class="me-3" style="font-size: 28px;"></i>
             <h5 class="modal-title mb-0" data-alert-title>&nbsp;</h5>
         </div>
         <button type="button" class="btn-close" data-modal-close aria-label="Cerrar"></button>
@@ -400,38 +391,28 @@ class AlertService {
 
         // Header sin color de fondo
         let headerClass = 'modal-header';
-        let iconPath = './public/img/files/info.svg'; // por defecto
+        let iconClass = 'bi bi-info-circle text-info'; // por defecto
 
         switch (type) {
             case 'danger':
             case 'error':
-                iconPath = './public/img/files/danger.svg';
+                iconClass = 'bi bi-exclamation-triangle text-danger';
                 break;
             case 'warning':
-                iconPath = './public/img/files/warning.svg';
+                iconClass = 'bi bi-exclamation-triangle text-warning';
                 break;
             case 'success':
-                iconPath = './public/img/files/success.svg';
+                iconClass = 'bi bi-check-circle text-success';
                 break;
             case 'info':
             default:
-                iconPath = './public/img/files/info.svg';
+                iconClass = 'bi bi-info-circle text-info';
         }
 
         filesModalBody.querySelector('[data-alert-header]').className = headerClass;
         const iconElement = filesModalBody.querySelector('[data-alert-icon]');
-        iconElement.dataset.src = iconPath;
-        // Use safe setter so alert icons fallback if missing
-        try {
-            iconElement.onerror = null;
-            iconElement.src = iconPath.replace(/\.\//gi, this.modal.scriptPath);
-            iconElement.onerror = () => {
-                iconElement.onerror = null;
-                iconElement.src = this.modal.scriptPath + './public/img/files/file-alt.svg';
-            };
-        } catch (e) {
-            iconElement.src = iconPath.replace(/\.\//gi, this.modal.scriptPath);
-        }
+        iconElement.className = iconClass + ' me-3';
+        iconElement.style.fontSize = '28px';
         filesModalBody.querySelector('[data-alert-title]').textContent = title;
         filesModalBody.querySelector('[data-alert-content]').innerHTML = content;
     }
@@ -471,15 +452,6 @@ class FilesExplorer {
         this.currentView = 'list';
         // Map to store popper instances and original parents for moved dropdown menus
         this._fePopperMap = new WeakMap();
-        // Pre-computed set of available icon names in public/img/files (lowercase, without .svg)
-        // This list is generated from the repository's public/img/files directory so the
-        // runtime can prefer `filetype-<ext>` icons when present, then fall back to
-        // default-* icons and finally `file-alt`.
-        this._availableFileIcons = new Set([
-            'default-video', 'default-code', 'default-compress', 'default-image', 'default-music', 'default-terminal',
-            'file-alt', 'file-excel', 'file-pdf', 'file-ppt', 'file-word',
-            'filetype-aac', 'filetype-ai', 'filetype-bmp', 'filetype-cs', 'filetype-css', 'filetype-csv', 'filetype-doc', 'filetype-docx', 'filetype-exe', 'filetype-gif', 'filetype-heic', 'filetype-html', 'filetype-java', 'filetype-jpg', 'filetype-js', 'filetype-json', 'filetype-jsx', 'filetype-key', 'filetype-m4p', 'filetype-md', 'filetype-mdx', 'filetype-mov', 'filetype-mp3', 'filetype-mp4', 'filetype-otf', 'filetype-php', 'filetype-png', 'filetype-ppt', 'filetype-pptx', 'filetype-psd', 'filetype-py', 'filetype-raw', 'filetype-rb', 'filetype-sass', 'filetype-scss', 'filetype-sh', 'filetype-sql', 'filetype-svg', 'filetype-tiff', 'filetype-tsx', 'filetype-ttf', 'filetype-txt', 'filetype-wav', 'filetype-woff', 'filetype-xls', 'filetype-xlsx', 'filetype-xml', 'filetype-yml'
-        ]);
         // Estado cuando se ha iniciado una operación "mover" y queda pendiente el pegado
         this.isMovePending = false;
         // Tamaño máximo de archivo en MB (por defecto 5MB)
@@ -510,20 +482,6 @@ class FilesExplorer {
         };
     }
 
-    // Safely set image src with a fallback to file-alt.svg on error
-    setImgSrcSafe(imgEl, src) {
-        try {
-            imgEl.onerror = null;
-            imgEl.src = src;
-            imgEl.onerror = () => {
-                imgEl.onerror = null;
-                imgEl.src = this.scriptPath + './public/img/files/file-alt.svg';
-            };
-        } catch (e) {
-            // ignore
-        }
-    }
-
     start() {
         // Convierte rutas relativas en absolutas
         this.convertRelativeImagePathToAbsolute(this.element);
@@ -547,13 +505,13 @@ class FilesExplorer {
         this.element.querySelector('[data-id="btnUploadFile"]').onclick = function () {
             this.setModalContent('template_form_upload');
             this.showModal();
-            
+
             // Actualizar el mensaje de tamaño máximo
             const sizeHint = this.element.querySelector('[data-id="files-modal-content"] [data-max-size-hint]');
             if (sizeHint) {
                 sizeHint.textContent = `Tamaño máximo por archivo: ${this.maxFileSize}MB`;
             }
-            
+
             this.element.querySelector('[data-id="form_upload_files"]').onsubmit = this.uploadFiles.bind(this);
 
             this.element.querySelector('[data-id="form_upload_files"] input[name="files[]"]').onchange = function (event) {
@@ -1091,22 +1049,22 @@ class FilesExplorer {
 
             const td = tr.querySelectorAll('td');
 
-            const img_icon_type = td[0].querySelector('img');
+            const iconElement = td[0].querySelector('i');
             if (val.mime === 'directory') {
-                // Cambia la imagen
-                img_icon_type.dataset.src = './public/img/files/folder.svg';
-                this.setImgSrcSafe(img_icon_type, this.scriptPath + './public/img/files/folder.svg');
-                img_icon_type.style.cursor = 'pointer';
+                // Set folder icon using Bootstrap Icons
+                iconElement.className = 'bi bi-folder-fill text-warning';
+                iconElement.style.cursor = 'pointer';
+                iconElement.style.fontSize = '24px';
 
                 td[0].ondblclick = this.goDirectory.bind(this, val.basename);
                 td[1].ondblclick = this.goDirectory.bind(this, val.basename);
                 td[2].ondblclick = this.goDirectory.bind(this, val.basename);
                 tr.style.cursor = 'pointer';
             } else {
-                // Cambia la imagen
-                img_icon_type.dataset.src = './public/img/files/' + this.getClassByExts(ext) + '.svg';
-                this.setImgSrcSafe(img_icon_type, this.scriptPath + './public/img/files/' + this.getClassByExts(ext) + '.svg');
-                img_icon_type.style.cursor = 'default';
+                // Set file icon using Bootstrap Icons
+                iconElement.className = this.getClassByExts(ext);
+                iconElement.style.cursor = 'default';
+                iconElement.style.fontSize = '24px';
                 tr.style.cursor = 'default';
             }
 
@@ -1182,14 +1140,15 @@ class FilesExplorer {
 
             this.convertRelativeImagePathToAbsolute(colDiv);
 
-            const img_icon = card.querySelector('.icon-file-type-grid');
+            const iconElement = card.querySelector('.icon-file-type-grid');
             const filenameEl = card.querySelector('[data-grid-filename]');
             const sizeEl = card.querySelector('[data-grid-size]');
             const iconContainer = card.querySelector('[data-grid-icon-container]');
 
             if (val.mime === 'directory') {
-                img_icon.dataset.src = './public/img/files/folder.svg';
-                this.setImgSrcSafe(img_icon, this.scriptPath + './public/img/files/folder.svg');
+                // Set folder icon using Bootstrap Icons
+                iconElement.className = 'bi bi-folder-fill text-warning';
+                iconElement.style.fontSize = '48px';
                 iconContainer.style.cursor = 'pointer';
                 card.style.cursor = 'pointer';
 
@@ -1197,8 +1156,9 @@ class FilesExplorer {
                 filenameEl.ondblclick = this.goDirectory.bind(this, val.basename);
                 sizeEl.textContent = '...';
             } else {
-                img_icon.dataset.src = './public/img/files/' + this.getClassByExts(ext) + '.svg';
-                this.setImgSrcSafe(img_icon, this.scriptPath + './public/img/files/' + this.getClassByExts(ext) + '.svg');
+                // Set file icon using Bootstrap Icons
+                iconElement.className = this.getClassByExts(ext);
+                iconElement.style.fontSize = '48px';
                 iconContainer.style.cursor = 'default';
                 card.style.cursor = 'default';
                 sizeEl.textContent = this.humanFileSize(val.size);
@@ -1388,49 +1348,120 @@ class FilesExplorer {
     }
 
     getClassByExts(ext) {
-        if (!ext || typeof ext !== 'string') return 'file-alt';
+        if (!ext || typeof ext !== 'string') return 'bi bi-file-earmark';
         const e = ext.toLowerCase().replace(/^[\.]/, '');
 
-        // 1) Prefer `filetype-<ext>` if an explicit icon exists in the icons folder
-        const filetypeKey = 'filetype-' + e;
-        if (this._availableFileIcons.has(filetypeKey)) return filetypeKey;
+        // Map file extensions to Bootstrap Icons
+        const iconMap = {
+            // Documents
+            'pdf': 'bi bi-file-earmark-pdf',
+            'doc': 'bi bi-file-earmark-word',
+            'docx': 'bi bi-file-earmark-word',
+            'odt': 'bi bi-file-earmark-word',
+            'xls': 'bi bi-file-earmark-excel',
+            'xlsx': 'bi bi-file-earmark-excel',
+            'ods': 'bi bi-file-earmark-excel',
+            'csv': 'bi bi-file-earmark-spreadsheet',
+            'ppt': 'bi bi-file-earmark-ppt',
+            'pptx': 'bi bi-file-earmark-ppt',
+            'odp': 'bi bi-file-earmark-ppt',
+            'txt': 'bi bi-file-earmark-text',
+            'rtf': 'bi bi-file-earmark-text',
+            'md': 'bi bi-file-earmark-text',
+            'markdown': 'bi bi-file-earmark-text',
 
-        // 2) Map common extensions to specific icons (these keys are present in the
-        //    available icons list and cover frequent office/media types).
-        const specific = {
-            'pdf': 'file-pdf',
-            'doc': 'file-word',
-            'docx': 'file-word',
-            'xls': 'file-excel',
-            'xlsx': 'file-excel',
-            'ppt': 'file-ppt',
-            'pptx': 'file-ppt',
-            'odt': 'file-excel',
-            'zip': 'default-compress',
-            'rar': 'default-compress',
-            '7z': 'default-compress',
-            'gz': 'default-compress',
-            'tar': 'default-compress'
+            // Code files
+            'html': 'bi bi-file-earmark-code',
+            'htm': 'bi bi-file-earmark-code',
+            'css': 'bi bi-file-earmark-code',
+            'scss': 'bi bi-file-earmark-code',
+            'sass': 'bi bi-file-earmark-code',
+            'less': 'bi bi-file-earmark-code',
+            'js': 'bi bi-file-earmark-code',
+            'jsx': 'bi bi-file-earmark-code',
+            'ts': 'bi bi-file-earmark-code',
+            'tsx': 'bi bi-file-earmark-code',
+            'json': 'bi bi-file-earmark-code',
+            'xml': 'bi bi-file-earmark-code',
+            'yml': 'bi bi-file-earmark-code',
+            'yaml': 'bi bi-file-earmark-code',
+            'php': 'bi bi-file-earmark-code',
+            'py': 'bi bi-file-earmark-code',
+            'rb': 'bi bi-file-earmark-code',
+            'java': 'bi bi-file-earmark-code',
+            'c': 'bi bi-file-earmark-code',
+            'cpp': 'bi bi-file-earmark-code',
+            'cs': 'bi bi-file-earmark-code',
+            'go': 'bi bi-file-earmark-code',
+            'sh': 'bi bi-file-earmark-code',
+            'bash': 'bi bi-file-earmark-code',
+            'sql': 'bi bi-file-earmark-code',
+
+            // Images
+            'jpg': 'bi bi-file-earmark-image',
+            'jpeg': 'bi bi-file-earmark-image',
+            'png': 'bi bi-file-earmark-image',
+            'gif': 'bi bi-file-earmark-image',
+            'bmp': 'bi bi-file-earmark-image',
+            'svg': 'bi bi-file-earmark-image',
+            'webp': 'bi bi-file-earmark-image',
+            'ico': 'bi bi-file-earmark-image',
+            'tif': 'bi bi-file-earmark-image',
+            'tiff': 'bi bi-file-earmark-image',
+            'heic': 'bi bi-file-earmark-image',
+            'raw': 'bi bi-file-earmark-image',
+            'psd': 'bi bi-file-earmark-image',
+            'ai': 'bi bi-file-earmark-image',
+
+            // Audio
+            'mp3': 'bi bi-file-earmark-music',
+            'wav': 'bi bi-file-earmark-music',
+            'aac': 'bi bi-file-earmark-music',
+            'ogg': 'bi bi-file-earmark-music',
+            'flac': 'bi bi-file-earmark-music',
+            'm4a': 'bi bi-file-earmark-music',
+            'wma': 'bi bi-file-earmark-music',
+            'm4p': 'bi bi-file-earmark-music',
+
+            // Video
+            'mp4': 'bi bi-file-earmark-play',
+            'avi': 'bi bi-file-earmark-play',
+            'mov': 'bi bi-file-earmark-play',
+            'mkv': 'bi bi-file-earmark-play',
+            'webm': 'bi bi-file-earmark-play',
+            'flv': 'bi bi-file-earmark-play',
+            'wmv': 'bi bi-file-earmark-play',
+            'm4v': 'bi bi-file-earmark-play',
+            'mp4v': 'bi bi-file-earmark-play',
+
+            // Archives
+            'zip': 'bi bi-file-earmark-zip',
+            'rar': 'bi bi-file-earmark-zip',
+            '7z': 'bi bi-file-earmark-zip',
+            'tar': 'bi bi-file-earmark-zip',
+            'gz': 'bi bi-file-earmark-zip',
+            'bz2': 'bi bi-file-earmark-zip',
+            'xz': 'bi bi-file-earmark-zip',
+
+            // Fonts
+            'ttf': 'bi bi-file-earmark-font',
+            'otf': 'bi bi-file-earmark-font',
+            'woff': 'bi bi-file-earmark-font',
+            'woff2': 'bi bi-file-earmark-font',
+
+            // Executables
+            'exe': 'bi bi-file-earmark-binary',
+            'dll': 'bi bi-file-earmark-binary',
+            'so': 'bi bi-file-earmark-binary',
+            'app': 'bi bi-file-earmark-binary',
+
+            // Others
+            'key': 'bi bi-key',
+            'mdx': 'bi bi-file-earmark-richtext'
         };
-        if (specific[e]) return specific[e];
 
-        // 3) Image/audio/video fallbacks using default-* icons when present
-        const imageExts = ['gif', 'jpg', 'jpeg', 'png', 'bmp', 'tif', 'svg', 'heic', 'raw', 'webp'];
-        const audioExts = ['mp3', 'wav', 'aac', 'm4a', 'flac', 'ogg'];
-        const videoExts = ['mp4', 'mkv', 'mov', 'avi', 'webm', 'mp4v', 'm4v'];
-
-        if (imageExts.includes(e) && this._availableFileIcons.has('default-image')) return 'default-image';
-        if (audioExts.includes(e) && this._availableFileIcons.has('default-music')) return 'default-music';
-        if (videoExts.includes(e) && (this._availableFileIcons.has('default-video') || this._availableFileIcons.has('Default-video'))) return this._availableFileIcons.has('default-video') ? 'default-video' : 'Default-video';
-
-        // 4) If there's a generic `file-<type>` icon for some known types, prefer it
-        const genericByExt = {
-            'css': 'filetype-css', 'js': 'filetype-js', 'json': 'filetype-json', 'html': 'filetype-html', 'php': 'filetype-php', 'py': 'filetype-py', 'md': 'filetype-md', 'txt': 'filetype-txt'
-        };
-        if (genericByExt[e] && this._availableFileIcons.has(genericByExt[e])) return genericByExt[e];
-
-        // 5) Fallback to 'file-alt' (default generic file icon)
-        return 'file-alt';
+        // Return mapped icon or default
+        return iconMap[e] || 'bi bi-file-earmark';
     }
 
     setAlert(type, title, content) {

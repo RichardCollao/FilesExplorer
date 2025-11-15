@@ -4,17 +4,15 @@
 /* no cubre (loading, truncate, etc)    */
 /* ===================================== */
 
-/* Iconos de tipo archivo */
+/* Iconos de tipo archivo (Bootstrap Icons) */
 [data-id="files_display_content"] .icon-file-type{
-    width: 24px;
-    height: 24px;
+    font-size: 24px;
     cursor: pointer;
 }
 
-/* Iconos de tipo archivo en vista grid */
+/* Iconos de tipo archivo en vista grid (Bootstrap Icons) */
 [data-id="files_display_grid"] .icon-file-type-grid{
-    width: 48px;
-    height: 48px;
+    font-size: 48px;
     cursor: pointer;
 }
 

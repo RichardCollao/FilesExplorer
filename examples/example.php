@@ -8,7 +8,8 @@
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    
     <!-- FilesExplorer estilos esenciales -->
     <link type="text/css" rel="stylesheet" href="../public/css/FilesExplorer.css" />
 
@@ -27,12 +28,9 @@
     <script type="text/javascript">
         window.onload = function() {
             let filesExplorer = new FilesExplorer('files_container_display');
-
-            // Configuración del cliente
             filesExplorer.setServerController('controller.php');
             filesExplorer.setPathRelative('');
             filesExplorer.maxFileSizeMb(5);
-            // Inicializar explorador
             filesExplorer.start();
         };
     </script>
