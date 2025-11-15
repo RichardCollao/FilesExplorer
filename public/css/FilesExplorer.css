@@ -31,7 +31,11 @@
 }
 
 /* Iconos de botones (toolbar y acciones) */
-[data-id="files_bar_buttons"] .icon-btn,
+[data-id="files_bar_buttons"] .icon-btn{
+    width: 18px;
+    height: 18px;
+}
+
 [data-id="files_display_content"] .icon-btn{
     width: 18px;
     height: 18px;

@@ -41,7 +41,7 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
             </div>
 
             <div class="d-flex">
-                <button type="button" class="btn btn-sm btn-light active" data-id="btnViewList"
+                <button type="button" class="btn btn-sm btn-light" data-id="btnViewList"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Vista de lista">
                     <img class="icon-btn" alt="Vista de lista" data-src="./public/img/ui/list.svg" />
                 </button>
@@ -68,13 +68,13 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
 
         <!-- Files table (List view) -->
         <div data-id="files_display_content" data-view="list" class="p-3">
-            <table class="table table-hover table-sm">
+            <table class="table table-hover table-sm table-bordered">
                 <thead class="table-light">
                     <tr>
                         <th scope="col" style="width: 50px; text-align: center;">&nbsp;</th>
                         <th scope="col">Filename</th>
                         <th scope="col" style="width: 100px; text-align: right;">Size</th>
-                        <th scope="col" style="width: 200px; text-align: center;">Operations</th>
+                        <th scope="col" style="min-width: 150px; max-width: 150px; text-align: center;">Operations</th>
                     </tr>
                     <tr style="display: none;">
                         <th scope="col" colspan="4" class="text-center text-muted">No se encontraron archivos</th>
@@ -110,23 +110,23 @@ const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
         <td class="text-end align-middle"></td>
 
         <td class="text-center">
-            <button type="button" class="btn btn-link p-0" data-action="download" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="download" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Descargar">
                 <img class="icon-btn" alt="Descargar" data-src="./public/img/ui/download.svg" />
             </button>
-            <button type="button" class="btn btn-link p-0" data-action="move" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="move" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Mover">
                 <img class="icon-btn" alt="Mover" data-src="./public/img/ui/cut.svg" />
             </button>
-            <button type="button" class="btn btn-link p-0" data-action="shared" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="shared" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Copiar enlace">
                 <img class="icon-btn" alt="Copiar enlace" data-src="./public/img/ui/link.svg" />
             </button>
-            <button type="button" class="btn btn-link p-0" data-action="edit" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="edit" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Renombrar">
                 <img class="icon-btn" alt="Renombrar" data-src="./public/img/ui/edit.svg" />
             </button>
-            <button type="button" class="btn btn-link p-0" data-action="delete" data-bs-toggle="tooltip"
+            <button type="button" class="btn btn-light py-0 px-1 border-0" data-action="delete" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Borrar">
                 <img class="icon-btn" alt="Borrar" data-src="./public/img/ui/trash.svg" />
             </button>
@@ -683,19 +683,13 @@ class FilesExplorer {
 
         const listView = this.element.querySelector('[data-id="files_display_content"]');
         const gridView = this.element.querySelector('[data-id="files_display_grid"]');
-        const btnList = this.element.querySelector('[data-id="btnViewList"]');
-        const btnGrid = this.element.querySelector('[data-id="btnViewGrid"]');
 
         if (view === 'list') {
             listView.classList.remove('d-none');
             gridView.classList.add('d-none');
-            btnList.classList.add('active');
-            btnGrid.classList.remove('active');
         } else {
             listView.classList.add('d-none');
             gridView.classList.remove('d-none');
-            btnList.classList.remove('active');
-            btnGrid.classList.add('active');
         }
 
         // Refrescar la vista actual
