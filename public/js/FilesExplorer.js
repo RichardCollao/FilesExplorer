@@ -1,7 +1,6 @@
-/* global fetch, eval, browser, top */
-
-// Template HTML embebido (antes estaba en public/views/default.layout.html)
-const FILES_EXPLORER_TEMPLATE = `<!-- files_explorer_container -->
+// Template HTML embebido
+const FILES_EXPLORER_TEMPLATE = `
+<!-- files_explorer_container -->
 <div data-id="files_explorer_container" class="unselect-text">
     <div class="card border-0 shadow-sm" style="max-height: 600px; overflow-y: auto;">
         <!-- Modal Bootstrap 5 -->
@@ -592,7 +591,7 @@ class FilesExplorer {
         const request = new Request(this.serverController, {
             method: 'POST',
             headers: headers,
-            mode: 'same-origin', // https://developer.mozilla.org/en-US/docs/Web/API/Request/mode
+            mode: 'same-origin',
             credentials: 'include',
             body: formData,
             cache: 'default'
@@ -603,7 +602,6 @@ class FilesExplorer {
                 response.text().then(
                     function (response) {
                         try {
-                            // Parsea los datos recibidos en un objeto json y llama la funcion callback
                             const json = JSON.parse(response);
                             callback(json);
                         } catch (e) {
@@ -833,7 +831,7 @@ class FilesExplorer {
         const request = new Request(this.serverController, {
             method: 'POST',
             headers: headers,
-            mode: 'same-origin', // https://developer.mozilla.org/en-US/docs/Web/API/Request/mode
+            mode: 'same-origin',
             credentials: 'include',
             body: formData,
             cache: 'default'
@@ -1314,7 +1312,7 @@ class FilesExplorer {
     refreshBreadcurmb() {
         const list_breadcrumb = this.element.querySelector('[data-id="files_breadcrumb_content"] ul,ol');
 
-        // Obtiene un arreglo con los elementos de la lista excluyento el primero que corresponde al home
+        // Obtiene un arreglo con los elementos de la lista excluyendo el primero que corresponde al home
         const items = list_breadcrumb.querySelectorAll('li:not(:first-child)');
 
         // Elimina los nodos seleccionados
