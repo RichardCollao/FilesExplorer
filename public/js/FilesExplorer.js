@@ -391,7 +391,7 @@ class AlertService {
 
         // Header sin color de fondo
         let headerClass = 'modal-header';
-        let iconClass = 'bi bi-info-circle text-info'; // por defecto
+        let iconClass;
 
         switch (type) {
             case 'danger':
