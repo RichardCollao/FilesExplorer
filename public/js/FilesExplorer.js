@@ -903,8 +903,8 @@ class FilesExplorer {
         const path_relative = this.getPathRelative();
         const uri = this.baseUrlFiles + path_relative + file;
 
-        // Usar API moderna de Clipboard si está disponible
-        if (navigator.clipboard && window.isSecureContext) {
+        // Usar API moderna de Clipboard si está disponible, globalThis es una propiedad estándar de JavaScript (introducida en ES2020) que proporciona una forma universal de acceder al objeto global, independientemente del entorno de ejecución
+        if (navigator.clipboard && globalThis.isSecureContext) {
             navigator.clipboard.writeText(uri)
                 .then(() => {
                     this.showClipboardModal(uri, 'Enlace Copiado', 'El enlace ha sido copiado al portapapeles:');
@@ -915,6 +915,7 @@ class FilesExplorer {
                 });
         } else {
             // Fallback para navegadores antiguos o contextos no seguros
+            console.warn('Clipboard API no soportada o contexto no seguro, usando fallback.');
             this.fallbackCopyToClipboard(uri);
         }
     }
@@ -1166,8 +1167,8 @@ class FilesExplorer {
             filenameEl.textContent = val.basename;
             filenameEl.title = val.basename;
             // Add Bootstrap tooltip to filename in grid view so long names show on hover
-            filenameEl.setAttribute('data-bs-toggle', 'tooltip');
-            filenameEl.setAttribute('data-bs-placement', 'bottom');
+            filenameEl.dataset.bsToggle = 'tooltip';
+            filenameEl.dataset.bsPlacement = 'bottom';
             // Ensure the tooltip text is read from title (Bootstrap prefers title)
             filenameEl.setAttribute('title', val.basename);
 
@@ -1318,7 +1319,7 @@ class FilesExplorer {
 
         // Elimina los nodos seleccionados
         for (const item of Array.from(items)) {
-            item.parentNode.removeChild(item);
+            item.remove();
         }
 
         // Asigna evento al boton home
