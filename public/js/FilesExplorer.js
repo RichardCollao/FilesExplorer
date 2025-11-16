@@ -642,7 +642,7 @@ class FilesExplorer {
                         existing.dispose();
                     }
                 } catch (err) {
-                    // ignore
+                    console.debug('FilesExplorer: Failed to dispose existing tooltip', err);
                 }
 
                 const tooltip = new bootstrap.Tooltip(tooltipTriggerEl, {
@@ -718,8 +718,7 @@ class FilesExplorer {
         const errors = [];
 
         if (fileInput.files.length > 0) {
-            for (let i = 0; i < fileInput.files.length; i++) {
-                const file = fileInput.files[i];
+            for (const file of fileInput.files) {
                 if (file.size > maxSizeBytes) {
                     const sizeMB = (file.size / 1024 / 1024).toFixed(2);
                     errors.push(`El archivo "${file.name}" (${sizeMB}MB) excede el tamaño máximo permitido de ${this.maxFileSize}MB`);
@@ -887,7 +886,7 @@ class FilesExplorer {
         this.loadController(
             function (response) {
                 if (response.errors.length > 0) {
-                    var content = '<p>La operación solicitada no se pudo realizar debido a los siguientes errores:</p>';
+                    let content = '<p>La operación solicitada no se pudo realizar debido a los siguientes errores:</p>';
                     content += this.helperUl(response.errors);
                     this.setAlert('warning', 'Error al Mover', content);
                     this.showModal();
@@ -1349,7 +1348,7 @@ class FilesExplorer {
 
     getClassByExts(ext) {
         if (!ext || typeof ext !== 'string') return 'bi bi-file-earmark';
-        const e = ext.toLowerCase().replace(/^[\.]/, '');
+        const e = ext.toLowerCase().replace(/^\./, '');
 
         // Map file extensions to Bootstrap Icons
         const iconMap = {
