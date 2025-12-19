@@ -605,18 +605,33 @@ class FilesExplorer {
                             const json = JSON.parse(response);
                             callback(json);
                         } catch (e) {
-                            console.log('error: ' + e);
+                            console.error('Error al parsear JSON:', e);
+                            console.error('Respuesta del servidor:', response);
+                            const content = '<p>El servidor no devolvió una respuesta JSON válida.</p>' +
+                                          '<p>Por favor, verifica que el controlador del servidor esté funcionando correctamente.</p>' +
+                                          '<p class="text-muted small">Detalles técnicos: ' + e.message + '</p>';
+                            this.setAlert('danger', 'Error de Respuesta del Servidor', content);
+                            this.showModal();
                         }
                         this.hideLoading();
                     }.bind(this));
             } else {
-                console.log('error' + response.status);
+                console.error('Error HTTP:', response.status);
+                const content = '<p>El servidor respondió con un error HTTP ' + response.status + '.</p>' +
+                              '<p>Por favor, verifica la configuración del servidor y vuelve a intentarlo.</p>';
+                this.setAlert('danger', 'Error en la Petición', content);
+                this.showModal();
                 this.hideLoading();
             }
         }.bind(this)).catch(function (err) {
-            console.log('error', err);
+            console.error('Error de red o conexión:', err);
+            const content = '<p>No se pudo conectar con el servidor.</p>' +
+                          '<p>Por favor, verifica tu conexión a internet y que el servidor esté disponible.</p>' +
+                          '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
+            this.setAlert('danger', 'Error de Conexión', content);
+            this.showModal();
             this.hideLoading();
-        });
+        }.bind(this));
     }
 
     showLoading() {
