@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     
     <!-- FilesExplorer estilos esenciales -->
-    <link type="text/css" rel="stylesheet" href="../public/css/FilesExplorer.css" />
+    <link type="text/css" rel="stylesheet" href="../public/FilesExplorer/css/FilesExplorer.css" />
 
     <!-- Bootstrap 5 JS Bundle (incluye Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- FilesExplorer -->
-    <script type="text/javascript" src="../public/js/FilesExplorer.js"></script>
+    <script type="text/javascript" src="../public/FilesExplorer/js/FilesExplorer.js"></script>
 </head>
 
 <body class="bg-light">
