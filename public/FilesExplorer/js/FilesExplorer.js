@@ -852,14 +852,36 @@ class FilesExplorer {
             cache: 'default'
         });
 
-        fetch(request).then(function (t) {
-            return t.blob().then((b) => {
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(b);
-                a.setAttribute('download', file);
-                a.click();
-            });
-        });
+        fetch(request).then(function (response) {
+            if (response.ok) {
+                return response.blob().then((b) => {
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(b);
+                    a.setAttribute('download', file);
+                    a.click();
+                }).catch((err) => {
+                    console.error('Error al procesar el archivo descargado:', err);
+                    const content = '<p>No se pudo procesar el archivo para la descarga.</p>' +
+                                  '<p>Por favor, intenta nuevamente.</p>' +
+                                  '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
+                    this.setAlert('danger', 'Error al Descargar', content);
+                    this.showModal();
+                });
+            } else {
+                console.error('Error HTTP al descargar:', response.status);
+                const content = '<p>El servidor respondió con un error HTTP ' + response.status + ' al intentar descargar el archivo.</p>' +
+                              '<p>Por favor, verifica que el archivo exista y vuelve a intentarlo.</p>';
+                this.setAlert('danger', 'Error al Descargar', content);
+                this.showModal();
+            }
+        }.bind(this)).catch(function (err) {
+            console.error('Error de red al descargar:', err);
+            const content = '<p>No se pudo conectar con el servidor para descargar el archivo.</p>' +
+                          '<p>Por favor, verifica tu conexión a internet y que el servidor esté disponible.</p>' +
+                          '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
+            this.setAlert('danger', 'Error de Conexión', content);
+            this.showModal();
+        }.bind(this));
     }
 
     prepareMoveFiles(file) {
