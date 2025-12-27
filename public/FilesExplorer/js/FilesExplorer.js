@@ -439,7 +439,7 @@ class FilesExplorer {
         // Establece la ruta base correspondiente al modulo
         this.scriptPath = parser.origin + parser.pathname;
         // Establece la url por defecto del directorio publico de archivos
-        this.baseUrlFiles = this.scriptPath + 'root_files/';
+        this.baseUrlFiles = '/';
         // Establece la ruta por defecto del layout
         this.layout = 'public/views/default.layout.html';
 

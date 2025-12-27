@@ -30,6 +30,7 @@
             let filesExplorer = new FilesExplorer('files_container_display');
             filesExplorer.setServerController('controller.php');
             filesExplorer.setPathRelative('');
+            filesExplorer.setBaseUrlFiles('/uploads/');// Ruta base para clipboard y vista previa
             filesExplorer.maxFileSizeMb(5);
             filesExplorer.start();
         };
