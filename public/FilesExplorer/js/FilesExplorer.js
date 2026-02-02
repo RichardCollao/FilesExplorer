@@ -608,8 +608,8 @@ class FilesExplorer {
                             console.error('Error al parsear JSON:', e);
                             console.error('Respuesta del servidor:', response);
                             const content = '<p>El servidor no devolvió una respuesta JSON válida.</p>' +
-                                          '<p>Por favor, verifica que el controlador del servidor esté funcionando correctamente.</p>' +
-                                          '<p class="text-muted small">Detalles técnicos: ' + e.message + '</p>';
+                                '<p>Por favor, verifica que el controlador del servidor esté funcionando correctamente.</p>' +
+                                '<p class="text-muted small">Detalles técnicos: ' + e.message + '</p>';
                             this.setAlert('danger', 'Error de Respuesta del Servidor', content);
                             this.showModal();
                         }
@@ -618,7 +618,7 @@ class FilesExplorer {
             } else {
                 console.error('Error HTTP:', response.status);
                 const content = '<p>El servidor respondió con un error HTTP ' + response.status + '.</p>' +
-                              '<p>Por favor, verifica la configuración del servidor y vuelve a intentarlo.</p>';
+                    '<p>Por favor, verifica la configuración del servidor y vuelve a intentarlo.</p>';
                 this.setAlert('danger', 'Error en la Petición', content);
                 this.showModal();
                 this.hideLoading();
@@ -626,8 +626,8 @@ class FilesExplorer {
         }.bind(this)).catch(function (err) {
             console.error('Error de red o conexión:', err);
             const content = '<p>No se pudo conectar con el servidor.</p>' +
-                          '<p>Por favor, verifica tu conexión a internet y que el servidor esté disponible.</p>' +
-                          '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
+                '<p>Por favor, verifica tu conexión a internet y que el servidor esté disponible.</p>' +
+                '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
             this.setAlert('danger', 'Error de Conexión', content);
             this.showModal();
             this.hideLoading();
@@ -862,23 +862,23 @@ class FilesExplorer {
                 }).catch((err) => {
                     console.error('Error al procesar el archivo descargado:', err);
                     const content = '<p>No se pudo procesar el archivo para la descarga.</p>' +
-                                  '<p>Por favor, intenta nuevamente.</p>' +
-                                  '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
+                        '<p>Por favor, intenta nuevamente.</p>' +
+                        '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
                     this.setAlert('danger', 'Error al Descargar', content);
                     this.showModal();
                 });
             } else {
                 console.error('Error HTTP al descargar:', response.status);
                 const content = '<p>El servidor respondió con un error HTTP ' + response.status + ' al intentar descargar el archivo.</p>' +
-                              '<p>Por favor, verifica que el archivo exista y vuelve a intentarlo.</p>';
+                    '<p>Por favor, verifica que el archivo exista y vuelve a intentarlo.</p>';
                 this.setAlert('danger', 'Error al Descargar', content);
                 this.showModal();
             }
         }.bind(this)).catch(function (err) {
             console.error('Error de red al descargar:', err);
             const content = '<p>No se pudo conectar con el servidor para descargar el archivo.</p>' +
-                          '<p>Por favor, verifica tu conexión a internet y que el servidor esté disponible.</p>' +
-                          '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
+                '<p>Por favor, verifica tu conexión a internet y que el servidor esté disponible.</p>' +
+                '<p class="text-muted small">Detalles técnicos: ' + err.message + '</p>';
             this.setAlert('danger', 'Error de Conexión', content);
             this.showModal();
         }.bind(this));
@@ -1051,7 +1051,8 @@ class FilesExplorer {
                     let content = '<p>La operación solicitada no se pudo realizar debido a los siguientes errores:</p>';
                     content += this.helperUl(response.errors);
                     this.setAlert('warning', 'Error al Eliminar', content);
-                    this.showModal();
+                    // Pequeño delay para asegurar que el modal anterior se cerró completamente
+                    setTimeout(() => this.showModal(), 300);
                 } else {
                     this.refresh();
                     this.hideModal();
